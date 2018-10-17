@@ -1,0 +1,21 @@
+.row {
+	width : 100%;
+	display: inline-block;
+}
+.head {
+	width: 33%;
+	float: left;
+}
+.item {
+	border : 1px solid grey;
+	width : 120px;
+}
+.todo {
+	float: left;
+}
+.wip {
+	margin-left: 33%;
+}
+.done {
+    margin-left: 66%;
+}

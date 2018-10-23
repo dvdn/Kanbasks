@@ -7,10 +7,10 @@
   </head>
   <body>
     <?php
+    // tmp dev
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
-
-
+    // tmp end
 
     include('viewCrud.php');?>
   </body>

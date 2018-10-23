@@ -8,6 +8,7 @@ class Crud
     public $data;
     public $listName;
     public $attributesList;
+    public $statusList;
 
     public function __construct($filePath = 'data.json')
     {
@@ -18,6 +19,7 @@ class Crud
             $this->data = json_decode($this->fileContent, true);
             $this->listName = "tasks";
             $this->attributesList = ["title", "description", "created_at", "status"];
+            $this->statusList = ["todo", "wip", "done"];
         } else {
             throw new Exception("No file found", 1);
         }

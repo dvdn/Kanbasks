@@ -2,7 +2,7 @@
 include_once('Crud.php');
 $crud = new Crud();
 
-include('viewDashboard.php');
+include_once('viewDashboard.php');
 
 // actions related to GET/POST vars available
 if (isset($_POST["add"])) {

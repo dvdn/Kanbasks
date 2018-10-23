@@ -5,17 +5,11 @@ $data = $crud->data[$crud->listName];
 
 $attributesList = $crud->attributesList;
 $select ="";
- if (in_array('status', $crud->attributesList)) {
-     $select .= <<<EOT
-            <select name="status">
-              <option value="todo">todo</option>
-              <option value="wip">wip</option>
-              <option value="done">done</option>
-            </select>
-EOT;
+if (in_array('status', $crud->attributesList)) {
+    $select .= $view->SelectList($crud->statusList, $data[$id]['status']);
     $rmkey = array_search('status', $crud->attributesList);
     unset($attributesList[$rmkey]);
- }
+}
 
 echo <<<EOT
 <h3>Edition</h3>
@@ -24,11 +18,9 @@ echo <<<EOT
 EOT;
     foreach ($attributesList as $attribute) {
         $value = $data[$id][$attribute];
-        echo "<label for=\"$value\">$attribute</label>";
+        echo "<label for=\"$attribute\">$attribute</label>";
         echo "<input type=\"text\" value=\"$value\" name=\"$attribute\"/>";
     }
-
-    echo $data[$id]['status'];
     echo $select;
 
 echo <<<EOT

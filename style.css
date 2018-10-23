@@ -1,21 +1,34 @@
+body {
+	font-size: 0.8em;
+	font-family: sans-serif;
+}
 .row {
 	width : 100%;
 	display: inline-block;
+	padding-top: 2%;
 }
 .head {
 	width: 33%;
 	float: left;
+	text-align: center;
+	font-weight: bold;
 }
 .item {
 	border : 1px solid grey;
-	width : 120px;
+	width : 23%;
+	line-height: 1.5em;
+
 }
 .todo {
 	float: left;
+	margin-left: 5%;
+	background: lightsalmon;
 }
 .wip {
-	margin-left: 33%;
+	margin-left: 38%;	
+	background: lightyellow;
 }
 .done {
-    margin-left: 66%;
+    margin-left: 71%;
+    background: lightgreen;
 }

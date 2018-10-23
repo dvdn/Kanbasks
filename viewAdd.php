@@ -5,9 +5,9 @@
 $attributesList = $crud->attributesList;
 $select ="";
 if (in_array('status', $crud->attributesList)) {
-  $select .= $view->SelectList($crud->statusList);
-  $rmkey = array_search('status', $crud->attributesList);
-  unset($attributesList[$rmkey]);
+    $select .= $view->SelectList($crud->statusList);
+    $rmkey = array_search('status', $crud->attributesList);
+    unset($attributesList[$rmkey]);
 }
 
 $inputs = "";

@@ -1,14 +1,8 @@
 <?php
 // Html Addition
-// tableHead
-
-$attributesList = $crud->attributesList;
-$select ="";
-if (in_array('status', $crud->attributesList)) {
-    $select .= $view->SelectList($crud->statusList);
-    $rmkey = array_search('status', $crud->attributesList);
-    unset($attributesList[$rmkey]);
-}
+$attributesDisplay = $view->manageAttributesDisplay($crud);
+$attributesList = $attributesDisplay["stdAttributes"];
+$select = $attributesDisplay["select"];
 
 $inputs = "";
 foreach ($attributesList as $attribute) {

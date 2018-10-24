@@ -2,7 +2,6 @@
 
 class Crud
 {
-    private $homePath;
     private $filePath;
     private $fileContent;
     public $data;
@@ -12,7 +11,6 @@ class Crud
 
     public function __construct($filePath = 'data.json')
     {
-        $this->homePath = $_SERVER['PHP_SELF'];
         if (file_exists($filePath)) {
             $this->filePath = $filePath;
             $this->fileContent = file_get_contents($filePath);
@@ -31,7 +29,7 @@ class Crud
         $data = $this->data;
         array_push($data[$listName], $_POST);
         file_put_contents($this->filePath, json_encode($data));
-        header("Location: ".$this->homePath);
+        $this->refreshBoard();
     }
 
     public function actionRead()
@@ -56,7 +54,7 @@ class Crud
                 $data[$listName][$id] = $post;
                 file_put_contents($this->filePath, json_encode($data));
             }
-            header("Location: ".$this->homePath);
+            $this->refreshBoard();
         }
     }
 
@@ -67,9 +65,19 @@ class Crud
             $data = $this->data;
             unset($data[$listName][$id]);
             file_put_contents($this->filePath, json_encode($data));
-            header("Location: ".$this->homePath);
+            $this->refreshBoard();
         } else {
             throw new Exception("Nothing to delete", 1);
+        }
+    }
+
+    public function refreshBoard()
+    {
+        if (headers_sent()) {
+            echo('Roger that.<br>Please -> <a href="index.php">refresh the board</a>');
+        }
+        else {
+            header("Location: ".$_SERVER['PHP_SELF']);
         }
     }
 }

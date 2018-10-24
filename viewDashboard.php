@@ -3,8 +3,7 @@ include_once('View.php');
 $view = new View();
 
 // tableHead
-    $tHead = "<div class='row'><div class='head'> To Do </div><div class='head'> WIP </div><div class='head'> Done </div></div>";
-
+$tHead = "<div class='row'><div class='head'> To Do </div><div class='head'> WIP </div><div class='head'> Done </div></div>";
 
 echo $tHead;
 
@@ -27,7 +26,7 @@ EOT;
 
 echo <<<EOT
 <hr>
-<a href="?action=add">Add</a>
+<a href="?action=add">+ Add a new task</a>
 <hr>
 EOT;
 ?>

@@ -1,7 +1,28 @@
 <?php
 
 class View
-{    
+{
+    public function manageAttributesDisplay($crud, $id = null, $attributeSelect = 'status')
+    {
+            $attributesList = $crud->attributesList;
+            $select ="";
+            if (in_array($attributeSelect, $attributesList)) {
+
+                if (!empty($user)) {
+                    $select .= $this->SelectList($crud->statusList, $crud->data[$id][$attributeSelect]);
+                } else {
+                    $select .= $this->SelectList($crud->statusList);
+                }
+
+                $rmkey = array_search($attributeSelect, $attributesList);
+                unset($attributesList[$rmkey]);
+            }
+            return [
+                'stdAttributes' => $attributesList,
+                'select' => $select
+            ];
+    }
+
     public function SelectList($list, $selected = 'todo', $attribute = 'status')
     {
         $select = "";

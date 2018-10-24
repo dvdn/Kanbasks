@@ -1,15 +1,11 @@
 <?php
 // Html Edition
+$attributesDisplay = $view->manageAttributesDisplay($crud);
+$attributesList = $attributesDisplay["stdAttributes"];
+$select = $attributesDisplay["select"];
+
 $id = $_GET["id"];
 $data = $crud->data[$crud->listName];
-
-$attributesList = $crud->attributesList;
-$select ="";
-if (in_array('status', $crud->attributesList)) {
-    $select .= $view->SelectList($crud->statusList, $data[$id]['status']);
-    $rmkey = array_search('status', $crud->attributesList);
-    unset($attributesList[$rmkey]);
-}
 
 echo <<<EOT
 <h3>Edition</h3>

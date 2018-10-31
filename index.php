@@ -6,6 +6,6 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <?php include('viewCrud.php');?>
+    <?php include('viewCrud.php'); ?>
   </body>
 </html>

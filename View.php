@@ -5,13 +5,13 @@ class View
     public function manageAttributesDisplay($crud, $id = null, $attributeSelect = 'status')
     {
             $attributesList = $crud->attributesList;
-            $select ="";
+            $select = "";
             if (in_array($attributeSelect, $attributesList)) {
 
-                if (!empty($user)) {
-                    $select .= $this->SelectList($crud->statusList, $crud->data[$id][$attributeSelect]);
+                if (!empty($id)) {
+                    $select .= $this->selectList($crud->statusList, $crud->data[$id][$attributeSelect]);
                 } else {
-                    $select .= $this->SelectList($crud->statusList);
+                    $select .= $this->selectList($crud->statusList);
                 }
 
                 $rmkey = array_search($attributeSelect, $attributesList);
@@ -23,7 +23,7 @@ class View
             ];
     }
 
-    public function SelectList($list, $selected = 'todo', $attribute = 'status')
+    public function selectList($list, $selected = 'todo', $attribute = 'status')
     {
         $select = "";
         foreach ($list as $state) {

@@ -11,15 +11,19 @@ $data = reset($crud->data);
 ksort($data);
 
 foreach ($data as $idx => $item) {
+
     $status = $item['status'];
     $colorStyle = "";
-    if (in_array('color', array_keys($item))) {
+
+    if (isset($item['color'])) {
         $colorStyle = "style='background-color: ".$item['color'].";'";
     }
     
     $itemData = "<div class='row'><div class='item ".$status."' ".$colorStyle.">";
-    foreach ($crud->attributesList as $attribute){
-        $itemData .= $item[$attribute]."</br>";
+    foreach ($crud->attributesListText as $attribute){
+        if (isset($item[$attribute])) {
+            $itemData .= $item[$attribute]."</br>";
+        }
     }
 
     echo $itemData;

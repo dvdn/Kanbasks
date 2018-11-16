@@ -4,7 +4,8 @@
             "title": "task 1",
             "description": "You need to to this",
             "created_at": "2018-10-12",
-            "status": "wip"
+            "status": "wip",
+            "color": "lightblue"
         },
         "2": {
             "title": "task 2",

@@ -22,7 +22,8 @@ class View
                 'select' => $select
             ];
     }
-
+    
+    public function selectList($list, $selected = 'todo', $attribute = 'status')
     {
         $select = "";
         foreach ($list as $state) {

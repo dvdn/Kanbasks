@@ -16,21 +16,19 @@ body {
 .item {
     border : 1px solid grey;
     width : 23%;
-    line-height: 1.5em;
+    line-height: 2em;   
+    background: lightyellow;
 
 }
 .todo {
     float: left;
     margin-left: 5%;
-    background: lightsalmon;
 }
 .wip {
     margin-left: 38%;
-    background: lightyellow;
 }
 .done {
     margin-left: 71%;
-    background: lightgreen;
 }
 input[type=submit] {
     padding:5px 15px; 

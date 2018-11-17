@@ -12,10 +12,19 @@ ksort($data);
 
 foreach ($data as $idx => $item) {
     $status = $item['status'];
-    $itemData = "<div class='row'><div class='item ".$status."'>";
-    foreach ($crud->attributesList as $attribute){
-        $itemData .= $item[$attribute]."</br>";
+    $colorStyle = "";
+
+    if (isset($item['color'])) {
+        $colorStyle = "style='background-color: ".$item['color'].";'";
     }
+    
+    $itemData = "<div class='row'><div class='item ".$status."' ".$colorStyle.">";
+    foreach ($crud->attributesListText as $attribute){
+        if (isset($item[$attribute])) {
+            $itemData .= $item[$attribute]."</br>";
+        }
+    }
+
     echo $itemData;
         echo <<<EOT
                 <a href="?action=edit&id=$idx">Edit</a>

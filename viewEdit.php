@@ -13,7 +13,10 @@ echo <<<EOT
         <input type="hidden" value="$id" name="id"/>
 EOT;
     foreach ($attributesList as $attribute) {
-        $value = $data[$id][$attribute];
+        $value = "";
+        if (isset($data[$id][$attribute])) {
+            $value = $data[$id][$attribute];       
+        }
         echo "<label for=\"$attribute\">$attribute</label>";
         echo "<input type=\"text\" value=\"$value\" name=\"$attribute\"/>";
     }

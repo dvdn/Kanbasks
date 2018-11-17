@@ -11,7 +11,6 @@ $data = reset($crud->data);
 ksort($data);
 
 foreach ($data as $idx => $item) {
-
     $status = $item['status'];
     $colorStyle = "";
 

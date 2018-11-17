@@ -19,7 +19,6 @@ class Crud
             $this->listName = "tasks";
             $this->attributesList = ["title", "description", "created_at", "color", "status"];
             $this->attributesListText = ["title", "description", "created_at"];
-
             $this->statusList = ["todo", "wip", "done"];
         } else {
             throw new Exception("No file found", 1);

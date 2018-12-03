@@ -1,36 +1,37 @@
 {
-	"tasks": {
-		"1": {
-			"title": "task 1",
-			"description": "You need to do this",
-			"created_at": "2018-11",
-			"status": "wip",
-			"color": "lightblue"
-		},
-		"2": {
-			"title": "task 2",
-			"description": "You need to do that",
-			"created_at": "2018-11",
-			"status": "todo"
-		},
-		"3": {
-			"title": "task 3",
-			"description": "And that",
-			"created_at": "2018-11",
-			"status": "todo"
-		},
-		"4": {
-			"title": "task 4",
-			"description": "You need these",
-			"created_at": "2018-11",
-			"status": "wip"
-		},
-		"5": {
-			"title": "task 5",
-			"description": "Take this",
-			"created_at": "2018-11",
-			"status": "done",
-			"color": "lightgreen"
-		}
-	}
+    "tasks": {
+        "1": {
+            "title": "task 1",
+            "description": "You need to do this",
+            "created_at": "2018-11",
+            "status": "wip",
+            "color": "lightblue"
+        },
+        "2": {
+            "title": "task 2",
+            "description": "You need to do that",
+            "created_at": "2018-11",
+            "status": "todo"
+        },
+        "3": {
+            "title": "task 3",
+            "description": "And that",
+            "created_at": "2018-11",
+            "status": "todo",
+            "color": "orange"
+        },
+        "4": {
+            "title": "task 4",
+            "description": "You need these",
+            "created_at": "2018-11",
+            "status": "wip"
+        },
+        "5": {
+            "title": "task 5",
+            "description": "Take this",
+            "created_at": "2018-11",
+            "status": "done",
+            "color": "lightgreen"
+        }
+    }
 }

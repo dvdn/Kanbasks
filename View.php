@@ -2,6 +2,12 @@
 
 class View
 {
+    public $formAnchor;
+
+    public function __construct() {
+         $this->formAnchor = "formzone";
+    }
+
     public function manageAttributesDisplay($crud, $id = null, $attributeSelect = 'status')
     {
             $attributesList = $crud->attributesList;
@@ -22,7 +28,7 @@ class View
                 'select' => $select
             ];
     }
-    
+
     public function selectList($list, $selected = 'todo', $attribute = 'status')
     {
         $select = "";

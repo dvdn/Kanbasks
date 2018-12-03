@@ -1,6 +1,8 @@
  <?php
 include_once('View.php');
 $view = new View();
+$formAnchor = "#".$view->formAnchor;
+
 
 // tableHead
 $tHead = "<div class='row'><div class='head'> To Do </div><div class='head'> WIP </div><div class='head'> Done </div></div>";
@@ -17,7 +19,7 @@ foreach ($data as $idx => $item) {
     if (isset($item['color'])) {
         $colorStyle = "style='background-color: ".$item['color'].";'";
     }
-    
+
     $itemData = "<div class='row'><div class='item ".$status."' ".$colorStyle.">";
     foreach ($crud->attributesListText as $attribute){
         if (isset($item[$attribute])) {
@@ -27,15 +29,15 @@ foreach ($data as $idx => $item) {
 
     echo $itemData;
         echo <<<EOT
-                <a href="?action=edit&id=$idx">Edit</a>
-                <a href="?action=delete&id=$idx">Delete</a>
+                <a href="?action=edit&id=$idx$formAnchor">Edit</a>
+                <a href="?action=delete&id=$idx$formAnchor">Delete</a>
                 </div></div>
 EOT;
 }
 
 echo <<<EOT
 <hr>
-<a href="?action=add">+ Add a new task</a>
-<hr>
+<a href="?action=add$formAnchor">+ Add a new task</a>
+<hr id="$view->formAnchor">
 EOT;
 ?>

@@ -29,8 +29,8 @@ foreach ($data as $idx => $item) {
 
     echo $itemData;
         echo <<<EOT
-                <a href="?action=edit&id=$idx$formAnchor">Edit</a>
-                <a href="?action=delete&id=$idx$formAnchor">Delete</a>
+                <a href="?action=delete&id=$idx$formAnchor" class="delete action">Delete</a>
+                <a href="?action=edit&id=$idx$formAnchor" class="edit action">Edit</a>
                 </div></div>
 EOT;
 }

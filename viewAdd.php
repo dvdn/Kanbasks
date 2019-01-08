@@ -11,7 +11,7 @@ foreach ($attributesList as $attribute) {
 
 echo <<<EOT
 <h3>Addition</h3>
-<form action="index.php" method="POST">
+<form action="index.php$formAnchor" method="POST">
     $inputs
     $select
     <input type="submit" name="add" value="Add"/>

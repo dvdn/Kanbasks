@@ -15,8 +15,8 @@ a {
 }
 .action:hover{
     background: white;
-color: black;
-font-weight: bold;
+    color: black;
+    font-weight: bold;
 }
 .row {
     width : 100%;
@@ -30,9 +30,10 @@ font-weight: bold;
     font-weight: bold;
 }
 .item {
-    border : 1px solid grey;
-    width : 23%;
+    width: 21%;
     line-height: 2em;
+    padding: 5px 1%;
+    border: 1px solid grey;
     background: lightyellow;
     float:left;
 }

@@ -10,7 +10,7 @@ class Crud
     public $attributesListText;
     public $statusList;
 
-    public function __construct($filePath = 'data.json')
+    public function __construct($filePath = 'data/data.json')
     {
         if (file_exists($filePath)) {
             $this->filePath = $filePath;

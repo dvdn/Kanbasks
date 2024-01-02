@@ -1,11 +1,4 @@
-<?php
-// PHP debug
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-?>
-
-<?php $config = include('inc/config.php');?>
+<?php $config = include('inc/config.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,5 +8,6 @@ ini_set('display_errors', 1);
   </head>
   <body>
     <?php include('inc/viewCrud.php'); ?>
+    <footer><?php echo gmdate("Y-m-d\TH:i:s\Z"); ?></footer>
   </body>
 </html>

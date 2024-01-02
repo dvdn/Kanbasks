@@ -74,7 +74,7 @@ class Crud
     }
 
     public function refreshBoard()
-    {
+    {        
         if (headers_sent()) {
             echo('Roger that.<br>Please -> <a href="index.php">refresh the board</a>');
         }

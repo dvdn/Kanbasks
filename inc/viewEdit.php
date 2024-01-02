@@ -1,11 +1,11 @@
 <?php
 // Html Edition
-$attributesDisplay = $view->manageAttributesDisplay($crud);
-$attributesList = $attributesDisplay["stdAttributes"];
-$select = $attributesDisplay["select"];
-
 $id = $_GET["id"];
 $data = $crud->data[$crud->listName];
+
+$attributesDisplay = $view->manageAttributesDisplay($crud, $id);
+$attributesList = $attributesDisplay["stdAttributes"];
+$select = $attributesDisplay["select"];
 
 echo <<<EOT
 <h3>Edition</h3>

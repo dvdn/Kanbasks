@@ -10,7 +10,7 @@ class Crud
     public $attributesListText;
     public $statusList;
 
-    public function __construct($filePath = 'data.json')
+    public function __construct($filePath = 'data/data.json')
     {
         if (file_exists($filePath)) {
             $this->filePath = $filePath;
@@ -74,7 +74,7 @@ class Crud
     }
 
     public function refreshBoard()
-    {
+    {        
         if (headers_sent()) {
             echo('Roger that.<br>Please -> <a href="index.php">refresh the board</a>');
         }

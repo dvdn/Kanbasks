@@ -15,7 +15,7 @@ class View
             if (in_array($attributeSelect, $attributesList)) {
 
                 if (!empty($id)) {
-                    $select .= $this->selectList($crud->statusList, $crud->data[$id][$attributeSelect]);
+                    $select .= $this->selectList($crud->statusList, $crud->data['tasks'][$id][$attributeSelect]);
                 } else {
                     $select .= $this->selectList($crud->statusList);
                 }

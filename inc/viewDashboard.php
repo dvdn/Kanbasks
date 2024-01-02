@@ -36,8 +36,9 @@ EOT;
 }
 
 echo <<<EOT
-<hr>
-<a href="?action=add$formAnchor">+ Add a new task</a>
-<hr id="$view->formAnchor">
+<div class="menu">
+    <a href="?action=add$formAnchor">+ Add a new task</a>
+</div>
+<span id="$view->formAnchor"></span>
 EOT;
 ?>

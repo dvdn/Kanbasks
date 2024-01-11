@@ -1,2 +1,4 @@
+inc/config.php
 data/data.json.demo
+data/test.json
 *.tmp

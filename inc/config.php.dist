@@ -5,8 +5,8 @@
 */
 $config = array(
     'title' => "Kanbasks",
-    'data_filepath' => 'data/test.json',
-    'debug' => 1
+    'data_filepath' => 'data/data.json',
+    'debug' => 0
 );
 
 if ($config['debug'] == 1) {

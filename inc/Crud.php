@@ -22,9 +22,13 @@ class Crud
         }
     }
 
+    public function get_datagroup($group)
+    {
+        return $this->data[$group];
+    }
+
     public function actionAdd($group = 'tasks')
     {
-
         $data = $this->data;
         array_push($data[$group], $_POST);
         file_put_contents($this->filePath, json_encode($data));
@@ -48,12 +52,15 @@ class Crud
                 $data[$group][$id] = $post;
                 file_put_contents($this->filePath, json_encode($data));
             }
-            $this->refreshBoard();
+            $this->refreshBoard($id);
         }
     }
 
     public function actionDelete($id, $group = 'tasks')
     {
+
+
+
         if ($id && is_numeric($id) && $this->data[$group][$id]) {
             unset($this->data[$group][$id]);
             file_put_contents($this->filePath, json_encode($this->data));
@@ -63,10 +70,17 @@ class Crud
         }
     }
 
-    public function refreshBoard()
+    public function refreshBoard($anchor = '')
     {
         if (headers_sent()) {
-            echo ('Roger that.<br>Please -> <a href="index.php"><strong>refresh the board</strong></a>');
+            $fullAnchor = $anchor ?  '#' . $anchor : '';
+            echo <<<EOT
+
+             <form action="$fullAnchor">
+                Command understood. <br><br> Please ->
+                <button type="submit">refresh the board</button>
+             </form>
+EOT;
         } else {
             header("Location: " . $_SERVER['PHP_SELF']);
         }

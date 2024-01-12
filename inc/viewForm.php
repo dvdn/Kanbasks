@@ -9,12 +9,12 @@ const TEXT_INPUTS = [
 ];
 const VALID_STATUSES = ['todo', 'wip', 'done'];
 
-function viewEdit($crud, $id)
+function viewEdit($crud, $id, $anchorName)
 {
     $data = $crud->data['tasks'];
     echo <<<EOT
     <h3>Edition</h3>
-      <form action="index.php" method="POST">
+      <form action="index.php#$anchorName" method="POST">
             <input type="hidden" value="$id" name="id"/>
 EOT;
     foreach (TEXT_INPUTS as $attribute) {
@@ -35,8 +35,8 @@ EOT;
 }
 
 
-function viewAdd()
-{    
+function viewAdd($anchorName)
+{
     $inputs = "";
     foreach (TEXT_INPUTS as $attribute) {
         $inputs .= "<input type=\"text\" name=\"" . $attribute . "\" placeholder=\"" . $attribute . "\"/>";
@@ -45,7 +45,7 @@ function viewAdd()
 
     echo <<<EOT
     <h3>Addition</h3>
-    <form action="index.php" method="POST">
+    <form action="index.php#$anchorName" method="POST">
         $inputs
         $viewSelect
         <input type="submit" name="add" value="Add"/>
@@ -73,7 +73,7 @@ EOT;
 
 
 if ($_GET["action"] == "edit" && isset($_GET["id"])) {
-    viewEdit($crud, $_GET["id"]);
+    viewEdit($crud, $_GET["id"], $anchorName);
 } else if ($_GET["action"] == "add") {
-    viewAdd($crud);
+    viewAdd($anchorName);
 }

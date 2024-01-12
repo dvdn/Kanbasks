@@ -9,13 +9,28 @@ const TEXT_INPUTS = [
 ];
 const VALID_STATUSES = ['todo', 'wip', 'done'];
 
-function viewEdit($crud, $id, $anchorName)
+function viewDelete($group, $id, $anchorName)
 {
-    $data = $crud->data['tasks'];
+    echo <<<EOT
+    <h3>Deletion</h3>
+        <form action="index.php#$anchorName" method="POST">
+            <input type="hidden" value="$id" name="id"/>
+            <input type="hidden" name="group" value="$group"/>
+            Are you sure ?
+            <input type="submit" name="delete" value="Delete"/>
+        </form>
+EOT;
+}
+
+
+function viewEdit($crud, $group, $id, $anchorName)
+{
+    $data = $crud->get_datagroup($group);
     echo <<<EOT
     <h3>Edition</h3>
       <form action="index.php#$anchorName" method="POST">
             <input type="hidden" value="$id" name="id"/>
+            <input type="hidden" name="group" value="$group"/>
 EOT;
     foreach (TEXT_INPUTS as $attribute) {
         $value = "";
@@ -34,8 +49,7 @@ EOT;
 EOT;
 }
 
-
-function viewAdd($anchorName)
+function viewAdd($group, $anchorName)
 {
     $inputs = "";
     foreach (TEXT_INPUTS as $attribute) {
@@ -46,6 +60,7 @@ function viewAdd($anchorName)
     echo <<<EOT
     <h3>Addition</h3>
     <form action="index.php#$anchorName" method="POST">
+        <input type="hidden" name="group" value="$group"/>
         $inputs
         $viewSelect
         <input type="submit" name="add" value="Add"/>
@@ -73,7 +88,9 @@ EOT;
 
 
 if ($_GET["action"] == "edit" && isset($_GET["id"])) {
-    viewEdit($crud, $_GET["id"], $anchorName);
+    viewEdit($crud, $group, $_GET["id"], $anchorName);
 } else if ($_GET["action"] == "add") {
-    viewAdd($anchorName);
+    viewAdd($group, $anchorName);
+} else if ($_GET["action"] == "delete" && isset($_GET["id"])) {
+    viewDelete($group, $_GET["id"], $anchorName);
 }

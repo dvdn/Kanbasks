@@ -2,21 +2,50 @@
 include('inc/Crud.php');
 $crud = new Crud($config['data_filepath']);
 
+
+if (isset($_POST['group'])) {
+    $_SESSION['group'] = $_POST['group'];
+}
+
+
+$group = isset($_SESSION['group']) ? $_SESSION['group'] : 'tasks'; // default tasks group in data
+
+var_dump($_POST);
+var_dump($_SESSION);
+
+
 const DISPLAY_ATTR_AS_TEXT = ["name", "description", "creation_date", "due_date"];
 const ANCHOR_NAME = 'formarea';
 
 // tableHead
 function viewHead()
 {
-    echo "<div class='row'><div class='head'> To Do </div><div class='head'> WIP </div><div class='head'> Done </div></div>";
+    echo <<<EOT
+    <div class='row'>
+
+    <form action='index.php' method='post'>
+        <button name='group' value='tasks'>Tasks</button>
+        <button name='group' value='group2'>Group2</button>
+    </form>
+
+    </div>
+    <div class='row'>
+        <div class='head'> To Do </div><div class='head'> WIP </div><div class='head'> Done </div>
+    </div>
+EOT;
 }
 
 function viewData($crud)
 {
-    viewDataGroup($crud);
+    $group = isset($_SESSION['group']) ? $_SESSION['group'] : 'tasks'; // default tasks group in data
+    if (isset($_POST["add"])) {
+        unset($_POST["add"]);
+        $crud->actionAdd($group);
+    }
+    viewDataGroup($crud, $group);
 }
 
-function viewDataGroup($crud, $group = 'tasks')
+function viewDataGroup($crud, $group)
 {
     $groupData = $crud->get_datagroup($group);
     ksort($groupData);
@@ -59,29 +88,28 @@ function viewMenu()
 EOT;
 }
 
-function viewActions($crud, $anchorName)
+function viewActions($crud, $group, $anchorName)
 {
     // actions related to GET/POST vars available
     if (isset($_POST["add"])) {
         unset($_POST["add"]);
-        $crud->actionAdd();
+        $crud->actionAdd($group);
     }
     if (isset($_POST["edit"])) {
         unset($_POST["edit"]);
-        $crud->actionEdit();
+        $crud->actionEdit($group);
+    }
+    if (isset($_POST["delete"])) {
+        unset($_POST["delete"]);
+        $crud->actionDelete($group);
     }
     if (isset($_GET["action"])) {
-        if ($_GET["action"] == "delete" && isset($_GET["id"])) {
-            $crud->actionDelete($_GET["id"]);
-        }
-        if ($_GET["action"] == "edit" || $_GET["action"] == "add") {
-            include('viewForm.php');
-        }
+        include('viewForm.php'); // $anchorName is usable in this file
     }
 }
 
 // Display page content
 viewMenu();
-viewActions($crud, ANCHOR_NAME);
+viewActions($crud, $group, ANCHOR_NAME);
 viewHead();
 viewData($crud);

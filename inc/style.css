@@ -101,6 +101,10 @@ input[type=submit] {
 
 }
 
+form#refresh {
+    text-align: center;
+}
+
 footer {
     line-height: 2em;
     display: inline-block;

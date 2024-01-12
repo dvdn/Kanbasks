@@ -27,7 +27,7 @@ class Crud
         return $this->data[$group];
     }
 
-    public function actionAdd($group = 'tasks')
+    public function actionAdd($group)
     {
         $data = $this->data;
         array_push($data[$group], $_POST);
@@ -35,11 +35,10 @@ class Crud
         $this->refreshBoard();
     }
 
-    public function actionEdit($group = 'tasks')
+    public function actionEdit($group)
     {
         if (isset($_POST["id"])) {
             $id = $_POST["id"];
-
             $data = $this->data;
             $itemData = $data[$group][$id];
 
@@ -56,17 +55,15 @@ class Crud
         }
     }
 
-    public function actionDelete($id, $group = 'tasks')
+    public function actionDelete($group)
     {
-
-
-
-        if ($id && is_numeric($id) && $this->data[$group][$id]) {
+        if (isset($_POST["id"])) {
+            $id = $_POST["id"];
             unset($this->data[$group][$id]);
             file_put_contents($this->filePath, json_encode($this->data));
-            $this->refreshBoard();
         } else {
-            throw new Exception("Nothing to delete", 1);
+            echo "Nothing to delete";
+            $this->refreshBoard();
         }
     }
 
@@ -75,9 +72,9 @@ class Crud
         if (headers_sent()) {
             $fullAnchor = $anchor ?  '#' . $anchor : '';
             echo <<<EOT
-
-             <form action="$fullAnchor">
-                Command understood. <br><br> Please ->
+             <form id="refresh" action="$fullAnchor">
+                <p><img width="10%" src="inc/checkmark.png" alt="logo OK" /></p>
+                Please ->
                 <button type="submit">refresh the board</button>
              </form>
 EOT;

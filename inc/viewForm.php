@@ -68,7 +68,8 @@ EOT;
     }
 
     echo <<<EOT
-            <input type="submit" name="edit" value="Edit"/>
+            <input type="hidden" name="edit" value="task"/>
+            <input type="submit" value="Edit"/>
         </form>
 EOT;
 }
@@ -101,7 +102,8 @@ function viewAdd($crud, $group, $anchorName)
         <input type="hidden" name="group" value="$group"/>
         $inputs
         $viewSelect
-        <input type="submit" name="add" value="task"/>
+        <input type="hidden" name="add" value="task"/>
+        <input type="submit" value="Add"/>
     </form>
 EOT;
 }
@@ -112,9 +114,30 @@ function viewAddGroup($anchorName)
     <h3>New group</h3>
     <form action="index.php#$anchorName" method="POST">
         <input type="text" name="newgroup" value=""/>
-        <input type="submit" name="add" value="group"/>
+        <input type="hidden" name="add" value="group"/>
+        <input type="submit" value="Add"/>
     </form>
 EOT;
+}
+
+function viewEditGroup($crud, $anchorName)
+{
+
+
+    $group = $_SESSION['group'];
+
+
+
+echo <<<EOT
+<h3>Rename a group</h3>
+<form action="index.php#$anchorName" method="POST">
+    <input type="text" name="newgroup" value="$group"/>
+    <input type="hidden" name="edit" value="group"/>
+    <input type="submit" value="Rename"/>
+</form>
+EOT;
+
+
 }
 
 function viewSelect($list, $selected = 'todo', $attribute = 'status')
@@ -154,7 +177,9 @@ switch ($_GET["action"]) {
         viewAddGroup($group, $anchorName);
         break;
     case "editgroup":
-        // TODO
+        if (isset($_SESSION["group"])) {
+            viewEditGroup($crud, $anchorName);
+        }
         break;
     case "deletegroup":
         viewDeleteGroup($anchorName);

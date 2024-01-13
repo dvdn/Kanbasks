@@ -39,6 +39,19 @@ class Crud
         }
     }
 
+    public function actionEditGroup()
+    {
+        $newgroup = isset($_POST['newgroup']) ? $_POST['newgroup'] : "";
+        $data = $this->data;
+
+        if ($newgroup && !array_key_exists($newgroup, $data)) {
+            $data[$newgroup] = array();
+            unset($data[$_SESSION['group']]);
+            file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
+            $this->refreshBoard();
+        }
+    }
+
     public function actionAdd($group)
     {
         $data = $this->data;

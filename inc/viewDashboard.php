@@ -100,12 +100,14 @@ function viewMenu($crud)
 
     if (count($crud->data)) {
         $htmlCreateTask = '<a href="?action=add#' . $anchorName . '">+ Add a new task</a>';
+        $htmlEditGroup = '<a href="?action=editgroup#' . $anchorName . '">° Rename current group</a>';
         $htmlDeleteGroup = '<a href="?action=deletegroup#' . $anchorName . '">- Delete current group</a>';
     }
 
     echo <<<EOT
 <div class="menu">
     <a href="?action=addgroup#$anchorName">+ Add a new group</a>
+    $htmlEditGroup
     $htmlDeleteGroup
     $htmlCreateTask
 </div>
@@ -129,8 +131,16 @@ function viewActions($crud, $group, $anchorName)
         }
     }
     if (isset($_POST["edit"])) {
-        unset($_POST["edit"]);
-        $crud->actionEdit($group);
+        switch ($_POST["edit"]) {
+            case 'task':
+                unset($_POST["edit"]);
+                $crud->actionEdit($group);
+                break;
+            case 'group':
+                unset($_POST["edit"]);
+                $crud->actionEditGroup();
+                break;
+        }
     }
     if (isset($_POST["delete"])) {
         switch ($_POST["delete"]) {

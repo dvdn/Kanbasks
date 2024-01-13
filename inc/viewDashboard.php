@@ -40,7 +40,7 @@ function viewData($crud)
     if ($crud->data && array_key_exists($group, $crud->data)) {
         viewDataGroup($crud, $group);
     } else {
-        echo "No group nor task found.<br> Please create a new group and start to organize your tasks.";
+        echo "No task found.<br> You can create tasks or a new group from the menu.";
     }
 }
 
@@ -53,7 +53,7 @@ function viewDataGroup($crud, $group)
             viewTask($idx, $item, $crud->taskattributes);
         }
     } else {
-        echo "No task found.<br> You can create tasks from the menu.";
+        echo "No task found.<br> You can create tasks or a new group from the menu.";
     }
 }
 
@@ -100,14 +100,14 @@ function viewMenu($crud)
 
     if (count($crud->data)) {
         $htmlCreateTask = '<a href="?action=add#' . $anchorName . '">+ Add a new task</a>';
-        $htmlDeleteGroup = '<a href="?action=deletegroup#' . $anchorName . '">+ Delete current group</a>';
+        $htmlDeleteGroup = '<a href="?action=deletegroup#' . $anchorName . '">- Delete current group</a>';
     }
 
     echo <<<EOT
 <div class="menu">
-    $htmlCreateTask
     <a href="?action=addgroup#$anchorName">+ Add a new group</a>
     $htmlDeleteGroup
+    $htmlCreateTask
 </div>
 <span id="$anchorName"></span>
 EOT;

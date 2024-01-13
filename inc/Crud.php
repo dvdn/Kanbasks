@@ -93,15 +93,10 @@ class Crud
     public function actionDeleteGroup()
     {
         $deletegroup = isset($_POST['grouptodelete']) ? $_POST['grouptodelete'] : "";
-
-        $_SESSION['group'] = isset($_SESSION['group']) && $_SESSION['group'] != $deletegroup ? $_SESSION['group'] : ''; // Display an existing group
         if ($deletegroup) {
             unset($this->data[$deletegroup]);
             file_put_contents($this->filePath, json_encode($this->data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
-
-            if (!$this->data) { // when last group is deleted
-                $this->refreshBoard();
-            }
+            $this->refreshBoard();
         } else {
             echo "Nothing to delete.";
             $this->refreshBoard();

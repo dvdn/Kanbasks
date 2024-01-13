@@ -3,12 +3,12 @@
 function viewDelete($group, $id, $anchorName)
 {
     echo <<<EOT
-    <h3>Deletion</h3>
+    <h3>Delete a task</h3>
         <form action="index.php#$anchorName" method="POST">
             <input type="hidden" value="$id" name="id"/>
             <input type="hidden" name="group" value="$group"/>
             Are you sure ?
-            <input type="submit" name="delete" value="Delete"/>
+            <input type="submit" name="delete" value="task"/>
         </form>
 EOT;
 }
@@ -135,15 +135,28 @@ function viewSelect($list, $selected = 'todo', $attribute = 'status')
 EOT;
 }
 
-
-if ($_GET["action"] == "edit" && isset($_GET["id"])) {
-    viewEdit($crud, $group, $_GET["id"], $anchorName);
-} else if ($_GET["action"] == "add") {
-    viewAdd($crud, $group, $anchorName);
-} else if ($_GET["action"] == "delete" && isset($_GET["id"])) {
-    viewDelete($group, $_GET["id"], $anchorName);
-} else if ($_GET["action"] == "addgroup") {
-    viewAddGroup($group, $anchorName);
-} else if ($_GET["action"] == "deletegroup") {
-    viewDeleteGroup($anchorName);
+// Manage action
+switch ($_GET["action"]) {
+    case "add":
+        viewAdd($crud, $group, $anchorName);
+        break;
+    case "edit":
+        if (isset($_GET["id"])) {
+            viewEdit($crud, $group, $_GET["id"], $anchorName);
+        }
+        break;
+    case "delete":
+        if (isset($_GET["id"])) {
+            viewDelete($group, $_GET["id"], $anchorName);
+        }
+        break;
+    case "addgroup":
+        viewAddGroup($group, $anchorName);
+        break;
+    case "editgroup":
+        // TODO
+        break;
+    case "deletegroup":
+        viewDeleteGroup($anchorName);
+        break;
 }

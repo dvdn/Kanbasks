@@ -2,9 +2,9 @@
 
 Minimalist tasks manager, [kanban](https://en.wikipedia.org/wiki/Kanban) style inspired.
 
-![kanbask_dvdn_preview](https://github.com/dvdn/Kanbasks/assets/7195916/47eba3ee-0df7-403f-9872-c861506a0227)
+![dvdn_kanbasks_preview](https://github.com/dvdn/Kanbasks/assets/7195916/90c7bf8f-2b0c-43af-86bc-0a56079deab6)
 
-It's a flat file database interaction as a json file is directly modified by your actions, for example ['data.json'](https://github.com/dvdn/kanbasks/blob/master/data/data.json) 
+It's a flat file database interaction as a json file is directly modified by your actions, for example ['data.json'](https://github.com/dvdn/kanbasks/blob/master/data/data.json)
 
 \> See [demo](http://dvdn.online.fr/kanbasks/)
 

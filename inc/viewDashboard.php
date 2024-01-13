@@ -10,9 +10,10 @@ if (isset($_POST['group'])) {
 
 $group = isset($_SESSION['group']) ? $_SESSION['group'] : 'tasks'; // default tasks group in data
 
+echo "<hr>";
 var_dump($_POST);
 var_dump($_SESSION);
-
+echo "<hr>";
 
 const DISPLAY_ATTR_AS_TEXT = ["name", "description", "creation_date", "due_date"];
 const ANCHOR_NAME = 'formarea';
@@ -20,6 +21,7 @@ const ANCHOR_NAME = 'formarea';
 // tableHead
 function viewHead()
 {
+
     echo <<<EOT
     <div class='row'>
 
@@ -83,6 +85,7 @@ function viewMenu()
     echo <<<EOT
 <div class="menu">
     <a href="?action=add#$anchorName">+ Add a new task</a>
+    <a href="?action=addgroup#$anchorName">+ Add a new group</a>
 </div>
 <span id="$anchorName"></span>
 EOT;
@@ -92,8 +95,16 @@ function viewActions($crud, $group, $anchorName)
 {
     // actions related to GET/POST vars available
     if (isset($_POST["add"])) {
-        unset($_POST["add"]);
-        $crud->actionAdd($group);
+        switch ($_POST["add"]) {
+            case 'task':
+                unset($_POST["add"]);
+                $crud->actionAdd($group);
+                break;
+            case 'group':
+                unset($_POST["add"]);
+                $crud->actionAddGroup();
+                break;
+        }
     }
     if (isset($_POST["edit"])) {
         unset($_POST["edit"]);

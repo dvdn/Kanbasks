@@ -58,12 +58,28 @@ function viewAdd($group, $anchorName)
     $viewSelect = viewSelect(VALID_STATUSES);
 
     echo <<<EOT
-    <h3>Addition</h3>
+    <h3>New task</h3>
     <form action="index.php#$anchorName" method="POST">
         <input type="hidden" name="group" value="$group"/>
         $inputs
         $viewSelect
-        <input type="submit" name="add" value="Add"/>
+        <input type="submit" name="add" value="task"/>
+    </form>
+EOT;
+}
+
+function viewAddGroup($anchorName)
+{
+    $inputs = "";
+    foreach (TEXT_INPUTS as $attribute) {
+        $inputs .= "<input type=\"text\" name=\"" . $attribute . "\" placeholder=\"" . $attribute . "\"/>";
+    }
+
+    echo <<<EOT
+    <h3>New group</h3>
+    <form action="index.php#$anchorName" method="POST">
+        <input type="text" name="newgroup" value=""/>
+        <input type="submit" name="add" value="group"/>
     </form>
 EOT;
 }
@@ -93,4 +109,6 @@ if ($_GET["action"] == "edit" && isset($_GET["id"])) {
     viewAdd($group, $anchorName);
 } else if ($_GET["action"] == "delete" && isset($_GET["id"])) {
     viewDelete($group, $_GET["id"], $anchorName);
+} else if ($_GET["action"] == "addgroup") {
+    viewAddGroup($group, $anchorName);
 }

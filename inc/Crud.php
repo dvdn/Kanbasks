@@ -27,11 +27,33 @@ class Crud
         return $this->data[$group];
     }
 
+    public function actionAddGroup()
+    {
+        $newgroup = isset($_POST['newgroup']) ? $_POST['newgroup'] : "";
+        $data = $this->data;
+        var_dump($data);
+        if ($newgroup) {
+            //array_push($data, $newgroup=>[]);
+        }
+        echo "<hr>";
+        var_dump($data);
+        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json
+        $this->refreshBoard();
+    }
+
     public function actionAdd($group)
     {
         $data = $this->data;
-        array_push($data[$group], $_POST);
-        file_put_contents($this->filePath, json_encode($data));
+
+        foreach (self::TASK_ATTRIBUTES as $idx => $value) {
+            if (isset($_POST[$value]) && $_POST[$value]) { // persist only non empty values
+                $posted[$value] = $_POST[$value];
+            }
+        }
+
+        array_push($data[$group], $posted);
+
+        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json
         $this->refreshBoard();
     }
 
@@ -43,14 +65,18 @@ class Crud
             $itemData = $data[$group][$id];
 
             foreach (self::TASK_ATTRIBUTES as $idx => $value) {
-                $post[$value] = isset($_POST[$value]) ? $_POST[$value] : "";
+                if (isset($_POST[$value]) && $_POST[$value]) { // persist only non empty values
+                    $posted[$value] = $_POST[$value];
+                }
             }
 
             if ($itemData) {
                 unset($data[$group][$id]);
-                $data[$group][$id] = $post;
-                file_put_contents($this->filePath, json_encode($data));
+
+                $data[$group][$id] = $posted;
+                file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json
             }
+
             $this->refreshBoard($id);
         }
     }

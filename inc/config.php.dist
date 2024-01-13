@@ -14,10 +14,11 @@ if ($config['debug'] == 1) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
-    $msgDebug = "DEBUG mode";
     // To debug possible files permissions issues, uncomment following line to display which user is running php
-    // $msgDebug .= " (user : '".exec('whoami')."')";    
-    echo $msgDebug;
+    // $msgDebug .= " (user : '".exec('whoami')."')";
+    echo 'SESSION values : <pre>' . var_export($_SESSION, true) . '</pre>';
+    echo 'POST values : <pre>' . var_export($_POST, true) . '</pre>';
+    echo'<hr>';
   }
 
 return $config;

@@ -25,8 +25,8 @@ $config = include('inc/config.php');
 
   // Display page content
   viewMenu();
-  viewActions($crud, $group, ANCHOR_NAME, DEFAULT_GROUP);
   viewGroups($crud);
+  viewActions($crud, $group, ANCHOR_NAME, DEFAULT_GROUP);
   viewHead();
   viewData($crud);
   ?>

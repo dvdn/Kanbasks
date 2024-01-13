@@ -15,11 +15,13 @@ EOT;
 function viewGroups($crud)
 {
     $btnsGroup = "";
+    $currentGroup = isset($_SESSION['group']) ? $_SESSION['group'] : DEFAULT_GROUP;
     foreach (array_keys($crud->data) as $group) {
-        $btnsGroup .=  '<button name="group" value="' . $group . '">' . $group . '</button>';
+        $styleCurrent = $group == $currentGroup ? 'style="border-color: black; color:black; font-weight:bold;"' : '';
+        $btnsGroup .=  '<button class="group" name="group" value="' . $group . '" ' . $styleCurrent . '>' . $group . '</button>';
     }
     echo <<<EOT
-    <div class='row'>
+    <div class='row group'>
         <form action='index.php' method='post'>
             $btnsGroup
         </form>

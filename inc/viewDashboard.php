@@ -1,6 +1,6 @@
 <?php
-const DISPLAY_ATTR_AS_TEXT = ["name", "description", "creation_date", "due_date"];
 const ANCHOR_NAME = 'formarea';
+const TEXTAREA_HEIGHT = 5;
 
 // tableHead
 function viewHead()
@@ -64,18 +64,31 @@ function viewTask($idx, $item)
     $colorStyle = "style='background-color: " . $color . ";'";
     $anchorName = ANCHOR_NAME;
 
-    $itemData = "<div class='row'><div id=" . $idx . " class='item " . $status . "' " . $colorStyle . ">";
-    foreach (DISPLAY_ATTR_AS_TEXT as $attribute) {
-        if (isset($item[$attribute])) {
-            $itemData .= $item[$attribute] . "</br>";
+    echo "<div class='row'><div id=" . $idx . " class='item " . $status . "' " . $colorStyle . ">";
+
+    foreach (TASK_ATTRIBUTES as $attribute => $type) {
+        if (array_key_exists($attribute, $item)) {
+            switch ($type) {
+                case 'text':
+                    if ($attribute!="color") {
+                        echo "<span class=\"$attribute\" title=\"$attribute\">$item[$attribute]</span>";
+                    }
+
+                    break;
+                case "textarea":
+                    echo '<textarea rows="' . TEXTAREA_HEIGHT . '" readonly>' . $item[$attribute] . '</textarea>';
+                    break;
+            }
         }
     }
 
-    echo $itemData;
     echo <<<EOT
-                <a href="?action=delete&id=$idx#$anchorName" class="delete action">Delete</a>
-                <a href="?action=edit&id=$idx#$anchorName" class="edit action">Edit</a>
-                </div></div>
+    <div class='row'>
+            <a href="?action=delete&id=$idx#$anchorName" class="delete action">Delete</a>
+            <a href="?action=edit&id=$idx#$anchorName" class="edit action">Edit</a>
+            </div>
+            </div>
+        </div>
 EOT;
 }
 

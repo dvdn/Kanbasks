@@ -1,14 +1,5 @@
 <?php
 
-const TEXT_INPUTS = [
-    'name',
-    'description',
-    'creation_date',
-    'due_date',
-    'color'
-];
-const VALID_STATUSES = ['todo', 'wip', 'done'];
-
 function viewDelete($group, $id, $anchorName)
 {
     echo <<<EOT
@@ -45,16 +36,36 @@ function viewEdit($crud, $group, $id, $anchorName)
             <input type="hidden" value="$id" name="id"/>
             <input type="hidden" name="group" value="$group"/>
 EOT;
-    foreach (TEXT_INPUTS as $attribute) {
-        $value = "";
-        if (isset($data[$id][$attribute])) {
-            $value = $data[$id][$attribute];
-        }
-        echo "<label for=\"$attribute\">$attribute</label>";
-        echo "<input type=\"text\" value=\"$value\" name=\"$attribute\"/>";
-    }
+    foreach (TASK_ATTRIBUTES as $attribute => $type) {
+        switch ($type) {
+            case 'text':
+                $value = "";
+                if (isset($data[$id][$attribute])) {
+                    $value = $data[$id][$attribute];
+                }
+                echo "<label for=\"$attribute\">$attribute</label>";
 
-    echo viewSelect(VALID_STATUSES, $data[$id]['status']);
+                if ($attribute == 'color') {
+                    echo '<a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords" target="_blank"> (hint)</a>';
+                }
+
+                echo "<input type=\"text\" value=\"$value\" name=\"$attribute\"/>";
+                break;
+            case "textarea":
+                $value = "";
+                $textarea_height = TEXTAREA_HEIGHT;
+                if (isset($data[$id][$attribute])) {
+                    $value = $data[$id][$attribute];
+                }
+                echo "<label for=\"$attribute\">$attribute</label>";
+                echo "<textarea rows=\"$textarea_height\" value=\"$value\" name=\"$attribute\"/>$value</textarea>";
+                break;
+            default:
+                if ($attribute == 'status') {
+                    echo viewSelect(TASK_ATTRIBUTES[$attribute], $data[$id][$attribute]);
+                }
+        }
+    }
 
     echo <<<EOT
             <input type="submit" name="edit" value="Edit"/>
@@ -65,10 +76,24 @@ EOT;
 function viewAdd($group, $anchorName)
 {
     $inputs = "";
-    foreach (TEXT_INPUTS as $attribute) {
-        $inputs .= "<input type=\"text\" name=\"" . $attribute . "\" placeholder=\"" . $attribute . "\"/>";
+
+    foreach (TASK_ATTRIBUTES as $attribute => $type) {
+        switch ($type) {
+            case 'text':
+                $inputs .=  "<label for=\"$attribute\">$attribute</label>";
+                if ($attribute == 'color') {
+                    $inputs .= '<a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords" target="_blank"> (hint)</a>';
+                }
+                $inputs .=  "<input type=\"text\" name=\"$attribute\"/>";
+                break;
+            case "textarea":
+                $inputs .=  "<label for=\"$attribute\">$attribute</label>";
+                $inputs .=  "<textarea name=\"$attribute\"/> </textarea>";
+                break;
+        }
     }
-    $viewSelect = viewSelect(VALID_STATUSES);
+
+    $viewSelect = viewSelect(TASK_ATTRIBUTES['status']);
 
     echo <<<EOT
     <h3>New task</h3>
@@ -83,11 +108,6 @@ EOT;
 
 function viewAddGroup($anchorName)
 {
-    $inputs = "";
-    foreach (TEXT_INPUTS as $attribute) {
-        $inputs .= "<input type=\"text\" name=\"" . $attribute . "\" placeholder=\"" . $attribute . "\"/>";
-    }
-
     echo <<<EOT
     <h3>New group</h3>
     <form action="index.php#$anchorName" method="POST">

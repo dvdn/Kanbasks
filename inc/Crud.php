@@ -4,12 +4,12 @@ class Crud
 {
     private $filePath;
     const TASK_ATTRIBUTES = [
-        'name',
-        'description',
-        'creation_date',
-        'due_date',
-        'status',
-        'color'
+        'name' => 'text',
+        'description' => 'textarea',
+        'creation_date' => 'text',
+        'due_date' => 'text',
+        'status' => ['todo', 'wip', 'done'],
+        'color' => 'text'
     ];
 
     public function __construct($filePath)
@@ -43,7 +43,7 @@ class Crud
     {
         $data = $this->data;
 
-        foreach (self::TASK_ATTRIBUTES as $idx => $value) {
+        foreach (array_keys(self::TASK_ATTRIBUTES) as $idx => $value) {
             if (isset($_POST[$value]) && $_POST[$value]) { // persist only non empty values
                 $posted[$value] = $_POST[$value];
             }
@@ -62,7 +62,7 @@ class Crud
             $data = $this->data;
             $itemData = $data[$group][$id];
 
-            foreach (self::TASK_ATTRIBUTES as $idx => $value) {
+            foreach (array_keys(self::TASK_ATTRIBUTES) as $idx => $value) {
                 if (isset($_POST[$value]) && $_POST[$value]) { // persist only non empty values
                     $posted[$value] = $_POST[$value];
                 }
@@ -102,7 +102,6 @@ class Crud
             if (!$this->data) { // when last group is deleted
                 $this->refreshBoard();
             }
-
         } else {
             echo "Nothing to delete.";
             $this->refreshBoard();

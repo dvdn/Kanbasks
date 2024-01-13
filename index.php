@@ -14,6 +14,15 @@ $config = include('inc/config.php');
 
   <?php
 
+  const TASK_ATTRIBUTES = [
+    'name' => 'text',
+    'description' => 'textarea',
+    'creation_date' => 'text',
+    'due_date' => 'text',
+    'color' => 'text',
+    'status' => ['todo', 'wip', 'done'],
+  ];
+
   include('inc/viewDashboard.php');
   include('inc/Crud.php');
   $crud = new Crud($config['data_filepath']);

@@ -22,6 +22,23 @@ function viewDelete($group, $id, $anchorName)
 EOT;
 }
 
+function viewDeleteGroup($crud, $defaultGroup, $anchorName)
+{
+
+
+    $grouptodelete = isset($_SESSION['group']) ? $_SESSION['group'] : '';
+
+
+    echo <<<EOT
+    <h3>Delete a group</h3>
+        <form action="index.php#$anchorName" method="POST">
+        <input type="hidden" value="$grouptodelete" name="grouptodelete"/>
+            Are you sure you want to delete '$grouptodelete' group and all its tasks ?
+            <input type="submit" name="delete" value="group"/>
+        </form>
+EOT;
+}
+
 
 function viewEdit($crud, $group, $id, $anchorName)
 {
@@ -87,12 +104,12 @@ EOT;
 function viewSelect($list, $selected = 'todo', $attribute = 'status')
 {
     $select = "";
-    foreach ($list as $state) {
-        $select .= '<option value="' . $state . '"';
-        if ($state == $selected) {
+    foreach ($list as $item) {
+        $select .= '<option value="' . $item . '"';
+        if ($item == $selected) {
             $select .= 'selected = "selected"';
         }
-        $select .= '>' . $state . '</option>';
+        $select .= '>' . $item . '</option>';
     }
     return <<<EOT
             <label for="$attribute">$attribute</label>
@@ -111,4 +128,6 @@ if ($_GET["action"] == "edit" && isset($_GET["id"])) {
     viewDelete($group, $_GET["id"], $anchorName);
 } else if ($_GET["action"] == "addgroup") {
     viewAddGroup($group, $anchorName);
+} else if ($_GET["action"] == "deletegroup") {
+    viewDeleteGroup($crud, $defaultGroup, $anchorName);
 }

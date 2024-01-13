@@ -11,6 +11,7 @@ class Crud
         'status',
         'color'
     ];
+    const DEFAULT_GROUP = 'tasks';
 
     public function __construct($filePath)
     {
@@ -31,14 +32,12 @@ class Crud
     {
         $newgroup = isset($_POST['newgroup']) ? $_POST['newgroup'] : "";
         $data = $this->data;
-        var_dump($data);
-        if ($newgroup) {
-            //array_push($data, $newgroup=>[]);
+
+        if ($newgroup && !array_key_exists($newgroup, $data)) {
+            $data[$newgroup] = array();
+            file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
+            $this->refreshBoard();
         }
-        echo "<hr>";
-        var_dump($data);
-        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json
-        $this->refreshBoard();
     }
 
     public function actionAdd($group)
@@ -53,7 +52,7 @@ class Crud
 
         array_push($data[$group], $posted);
 
-        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json
+        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
         $this->refreshBoard();
     }
 
@@ -72,9 +71,8 @@ class Crud
 
             if ($itemData) {
                 unset($data[$group][$id]);
-
                 $data[$group][$id] = $posted;
-                file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json
+                file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
             }
 
             $this->refreshBoard($id);
@@ -86,9 +84,27 @@ class Crud
         if (isset($_POST["id"])) {
             $id = $_POST["id"];
             unset($this->data[$group][$id]);
-            file_put_contents($this->filePath, json_encode($this->data));
+            file_put_contents($this->filePath, json_encode($this->data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
         } else {
             echo "Nothing to delete";
+            $this->refreshBoard();
+        }
+    }
+
+    public function actionDeleteGroup()
+    {
+        $deletegroup = isset($_POST['grouptodelete']) ? $_POST['grouptodelete'] : "";
+
+        $_SESSION['group'] = isset($_SESSION['group']) && $_SESSION['group'] != $deletegroup ? $_SESSION['group'] : DEFAULT_GROUP; // Display an existing group
+        if ($deletegroup && $deletegroup != self::DEFAULT_GROUP) {
+            unset($this->data[$deletegroup]);
+            file_put_contents($this->filePath, json_encode($this->data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
+        } else {
+            $msg = "Nothing to delete.";
+            if ($deletegroup == self::DEFAULT_GROUP) {
+                $msg .= "&nbspDefault group '".self::DEFAULT_GROUP."' is not deletable.";
+            }
+            echo $msg;
             $this->refreshBoard();
         }
     }

@@ -15,7 +15,7 @@ EOT;
 function viewGroups($crud)
 {
     $btnsGroup = "";
-    $currentGroup = isset($_SESSION['group']) ? $_SESSION['group'] : DEFAULT_GROUP;
+    $currentGroup = isset($_SESSION['group']) ? $_SESSION['group'] : '';
     foreach (array_keys($crud->data) as $group) {
         $styleCurrent = $group == $currentGroup ? 'style="border-color: black; color:black; font-weight:bold;"' : '';
         $btnsGroup .=  '<button class="group" name="group" value="' . $group . '" ' . $styleCurrent . '>' . $group . '</button>';
@@ -32,21 +32,28 @@ EOT;
 
 function viewData($crud)
 {
-    $group = isset($_SESSION['group']) ? $_SESSION['group'] : DEFAULT_GROUP;
+    $group = $_SESSION['group'];
     if (isset($_POST["add"])) {
         unset($_POST["add"]);
         $crud->actionAdd($group);
     }
-    viewDataGroup($crud, $group);
+    if ($crud->data && array_key_exists($group, $crud->data)) {
+        viewDataGroup($crud, $group);
+    } else {
+        echo "No group nor task found.<br> Please create a new group and start to organize your tasks.";
+    }
 }
 
 function viewDataGroup($crud, $group)
 {
     $groupData = $crud->get_datagroup($group);
-    ksort($groupData);
-
-    foreach ($groupData as $idx => $item) {
-        viewTask($idx, $item);
+    if ($groupData) {
+        ksort($groupData);
+        foreach ($groupData as $idx => $item) {
+            viewTask($idx, $item);
+        }
+    } else {
+        echo "No task found.<br> You can create tasks from the menu.";
     }
 }
 
@@ -72,18 +79,20 @@ function viewTask($idx, $item)
 EOT;
 }
 
-function viewMenu()
+function viewMenu($crud)
 {
     $anchorName = ANCHOR_NAME;
+    $htmlCreateTask = "";
     $htmlDeleteGroup = "";
 
-    if (isset($_SESSION['group']) && ($_SESSION['group'] != DEFAULT_GROUP)) {
+    if (count($crud->data)) {
+        $htmlCreateTask = '<a href="?action=add#' . $anchorName . '">+ Add a new task</a>';
         $htmlDeleteGroup = '<a href="?action=deletegroup#' . $anchorName . '">+ Delete current group</a>';
     }
 
     echo <<<EOT
 <div class="menu">
-    <a href="?action=add#$anchorName">+ Add a new task</a>
+    $htmlCreateTask
     <a href="?action=addgroup#$anchorName">+ Add a new group</a>
     $htmlDeleteGroup
 </div>
@@ -91,7 +100,7 @@ function viewMenu()
 EOT;
 }
 
-function viewActions($crud, $group, $anchorName, $defaultGroup)
+function viewActions($crud, $group, $anchorName)
 {
     // actions related to GET/POST vars available
     if (isset($_POST["add"])) {
@@ -123,6 +132,6 @@ function viewActions($crud, $group, $anchorName, $defaultGroup)
         }
     }
     if (isset($_GET["action"])) {
-        include('viewForm.php'); // $anchorName & $defaultGroup used in this file
+        include('viewForm.php'); // $anchorName used in this file
     }
 }

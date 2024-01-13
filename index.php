@@ -13,20 +13,30 @@ $config = include('inc/config.php');
 <body>
 
   <?php
-  const DEFAULT_GROUP = 'tasks';
+
   include('inc/viewDashboard.php');
   include('inc/Crud.php');
   $crud = new Crud($config['data_filepath']);
 
-  if (isset($_POST['group'])) {
-    $_SESSION['group'] = $_POST['group'];
+  function setGroupInSession($crud)
+  {
+    if (isset($_POST['group'])) {
+      $_SESSION['group'] = $_POST['group'];
+    }
+    $firstGroupName = count($crud->data) ? array_keys($crud->data)[0] : '';
+
+    $_SESSION['group'] = (isset($_SESSION['group']) && count($crud->data) && array_key_exists($_SESSION['group'], $crud->data)) ? $_SESSION['group'] : $firstGroupName; // first group by default
   }
-  $group = isset($_SESSION['group']) ? $_SESSION['group'] : DEFAULT_GROUP;
+
+  setGroupInSession($crud);
 
   // Display page content
-  viewMenu();
-  viewGroups($crud);
-  viewActions($crud, $group, ANCHOR_NAME, DEFAULT_GROUP);
+  viewMenu($crud);
+
+  if (count($crud->data)) {
+    viewGroups($crud);
+  }
+  viewActions($crud, $_SESSION['group'], ANCHOR_NAME);
   viewHead();
   viewData($crud);
   ?>

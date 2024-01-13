@@ -11,7 +11,6 @@ class Crud
         'status',
         'color'
     ];
-    const DEFAULT_GROUP = 'tasks';
 
     public function __construct($filePath)
     {
@@ -31,7 +30,7 @@ class Crud
     public function actionAddGroup()
     {
         $newgroup = isset($_POST['newgroup']) ? $_POST['newgroup'] : "";
-        $data = $this->data;
+        $data = isset($this->data) ? $this->data : [];
 
         if ($newgroup && !array_key_exists($newgroup, $data)) {
             $data[$newgroup] = array();
@@ -95,16 +94,17 @@ class Crud
     {
         $deletegroup = isset($_POST['grouptodelete']) ? $_POST['grouptodelete'] : "";
 
-        $_SESSION['group'] = isset($_SESSION['group']) && $_SESSION['group'] != $deletegroup ? $_SESSION['group'] : DEFAULT_GROUP; // Display an existing group
-        if ($deletegroup && $deletegroup != self::DEFAULT_GROUP) {
+        $_SESSION['group'] = isset($_SESSION['group']) && $_SESSION['group'] != $deletegroup ? $_SESSION['group'] : ''; // Display an existing group
+        if ($deletegroup) {
             unset($this->data[$deletegroup]);
             file_put_contents($this->filePath, json_encode($this->data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
-        } else {
-            $msg = "Nothing to delete.";
-            if ($deletegroup == self::DEFAULT_GROUP) {
-                $msg .= "&nbspDefault group '".self::DEFAULT_GROUP."' is not deletable.";
+
+            if (!$this->data) { // when last group is deleted
+                $this->refreshBoard();
             }
-            echo $msg;
+
+        } else {
+            echo "Nothing to delete.";
             $this->refreshBoard();
         }
     }

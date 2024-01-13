@@ -22,13 +22,9 @@ function viewDelete($group, $id, $anchorName)
 EOT;
 }
 
-function viewDeleteGroup($crud, $defaultGroup, $anchorName)
+function viewDeleteGroup($anchorName)
 {
-
-
     $grouptodelete = isset($_SESSION['group']) ? $_SESSION['group'] : '';
-
-
     echo <<<EOT
     <h3>Delete a group</h3>
         <form action="index.php#$anchorName" method="POST">
@@ -129,5 +125,5 @@ if ($_GET["action"] == "edit" && isset($_GET["id"])) {
 } else if ($_GET["action"] == "addgroup") {
     viewAddGroup($group, $anchorName);
 } else if ($_GET["action"] == "deletegroup") {
-    viewDeleteGroup($crud, $defaultGroup, $anchorName);
+    viewDeleteGroup($anchorName);
 }

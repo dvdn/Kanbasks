@@ -13,16 +13,6 @@ $config = include('inc/config.php');
 <body>
 
   <?php
-
-  const TASK_ATTRIBUTES = [
-    'name' => 'text',
-    'description' => 'textarea',
-    'creation_date' => 'text',
-    'due_date' => 'text',
-    'color' => 'text',
-    'status' => ['todo', 'wip', 'done'],
-  ];
-
   include('inc/viewDashboard.php');
   include('inc/Crud.php');
   $crud = new Crud($config['data_filepath']);
@@ -43,7 +33,7 @@ $config = include('inc/config.php');
   viewMenu($crud);
 
   if (count($crud->data)) {
-    viewGroups($crud);
+    viewGroups($crud, ANCHOR_NAME);
   }
   viewActions($crud, $_SESSION['group'], ANCHOR_NAME);
   viewHead();

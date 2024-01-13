@@ -12,7 +12,7 @@ function viewHead()
 EOT;
 }
 
-function viewGroups($crud)
+function viewGroups($crud, $anchorName)
 {
     $btnsGroup = "";
     $currentGroup = isset($_SESSION['group']) ? $_SESSION['group'] : '';
@@ -22,7 +22,7 @@ function viewGroups($crud)
     }
     echo <<<EOT
     <div class='row group'>
-        <form action='index.php' method='post'>
+        <form action='index.php#$anchorName' method='post'>
             $btnsGroup
         </form>
     </div>
@@ -50,14 +50,14 @@ function viewDataGroup($crud, $group)
     if ($groupData) {
         ksort($groupData);
         foreach ($groupData as $idx => $item) {
-            viewTask($idx, $item);
+            viewTask($idx, $item, $crud->taskattributes);
         }
     } else {
         echo "No task found.<br> You can create tasks from the menu.";
     }
 }
 
-function viewTask($idx, $item)
+function viewTask($idx, $item, $taskattributes)
 {
     $status = $item['status'];
     $color = empty($item['color']) ? 'yellow' : $item['color'];
@@ -66,7 +66,7 @@ function viewTask($idx, $item)
 
     echo "<div class='row'><div id=" . $idx . " class='item " . $status . "' " . $colorStyle . ">";
 
-    foreach (TASK_ATTRIBUTES as $attribute => $type) {
+    foreach ($taskattributes as $attribute => $type) {
         if (array_key_exists($attribute, $item)) {
             switch ($type) {
                 case 'text':

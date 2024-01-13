@@ -3,20 +3,20 @@
 class Crud
 {
     private $filePath;
-    const TASK_ATTRIBUTES = [
-        'name' => 'text',
-        'description' => 'textarea',
-        'creation_date' => 'text',
-        'due_date' => 'text',
-        'status' => ['todo', 'wip', 'done'],
-        'color' => 'text'
-    ];
 
     public function __construct($filePath)
     {
         if (file_exists($filePath)) {
             $this->filePath = $filePath;
             $this->data = json_decode(file_get_contents($filePath), true);
+            $this->taskattributes = [
+                'name' => 'text',
+                'description' => 'textarea',
+                'creation_date' => 'text',
+                'due_date' => 'text',
+                'color' => 'text',
+                'status' => ['todo', 'wip', 'done'],
+              ];
         } else {
             throw new Exception("Data file not found", 1);
         }
@@ -43,7 +43,7 @@ class Crud
     {
         $data = $this->data;
 
-        foreach (array_keys(self::TASK_ATTRIBUTES) as $idx => $value) {
+        foreach (array_keys($this->taskattributes) as $idx => $value) {
             if (isset($_POST[$value]) && $_POST[$value]) { // persist only non empty values
                 $posted[$value] = $_POST[$value];
             }
@@ -62,7 +62,7 @@ class Crud
             $data = $this->data;
             $itemData = $data[$group][$id];
 
-            foreach (array_keys(self::TASK_ATTRIBUTES) as $idx => $value) {
+            foreach (array_keys($this->taskattributes) as $idx => $value) {
                 if (isset($_POST[$value]) && $_POST[$value]) { // persist only non empty values
                     $posted[$value] = $_POST[$value];
                 }

@@ -36,7 +36,7 @@ function viewEdit($crud, $group, $id, $anchorName)
             <input type="hidden" value="$id" name="id"/>
             <input type="hidden" name="group" value="$group"/>
 EOT;
-    foreach (TASK_ATTRIBUTES as $attribute => $type) {
+    foreach ($crud->taskattributes as $attribute => $type) {
         switch ($type) {
             case 'text':
                 $value = "";
@@ -62,7 +62,7 @@ EOT;
                 break;
             default:
                 if ($attribute == 'status') {
-                    echo viewSelect(TASK_ATTRIBUTES[$attribute], $data[$id][$attribute]);
+                    echo viewSelect($crud->taskattributes[$attribute], $data[$id][$attribute]);
                 }
         }
     }
@@ -73,11 +73,11 @@ EOT;
 EOT;
 }
 
-function viewAdd($group, $anchorName)
+function viewAdd($crud, $group, $anchorName)
 {
     $inputs = "";
 
-    foreach (TASK_ATTRIBUTES as $attribute => $type) {
+    foreach ($crud->taskattributes as $attribute => $type) {
         switch ($type) {
             case 'text':
                 $inputs .=  "<label for=\"$attribute\">$attribute</label>";
@@ -93,7 +93,7 @@ function viewAdd($group, $anchorName)
         }
     }
 
-    $viewSelect = viewSelect(TASK_ATTRIBUTES['status']);
+    $viewSelect = viewSelect($crud->taskattributes['status']);
 
     echo <<<EOT
     <h3>New task</h3>
@@ -139,7 +139,7 @@ EOT;
 if ($_GET["action"] == "edit" && isset($_GET["id"])) {
     viewEdit($crud, $group, $_GET["id"], $anchorName);
 } else if ($_GET["action"] == "add") {
-    viewAdd($group, $anchorName);
+    viewAdd($crud, $group, $anchorName);
 } else if ($_GET["action"] == "delete" && isset($_GET["id"])) {
     viewDelete($group, $_GET["id"], $anchorName);
 } else if ($_GET["action"] == "addgroup") {

@@ -4,12 +4,12 @@ function viewDelete($group, $id, $anchorName)
 {
     echo <<<EOT
     <h3>Delete a task</h3>
-        <form action="index.php#$anchorName" method="POST">
-            <input type="hidden" value="$id" name="id"/>
-            <input type="hidden" name="group" value="$group"/>
-            Are you sure ?
-            <input type="submit" name="delete" value="task"/>
-        </form>
+    <form action="index.php#$anchorName" method="POST">
+        <input type="hidden" value="$id" name="id"/>
+        <input type="hidden" name="group" value="$group"/>
+        Are you sure ?
+        <input type="submit" name="delete" value="task"/>
+    </form>
 EOT;
 }
 
@@ -18,14 +18,13 @@ function viewDeleteGroup($anchorName)
     $grouptodelete = isset($_SESSION['group']) ? $_SESSION['group'] : '';
     echo <<<EOT
     <h3>Delete a group</h3>
-        <form action="index.php#$anchorName" method="POST">
+    <form action="index.php#$anchorName" method="POST">
         <input type="hidden" value="$grouptodelete" name="grouptodelete"/>
-            Are you sure you want to delete '$grouptodelete' group and all its tasks ?
-            <input type="submit" name="delete" value="group"/>
-        </form>
+        Are you sure you want to delete '$grouptodelete' group and all its tasks ?
+        <input type="submit" name="delete" value="group"/>
+    </form>
 EOT;
 }
-
 
 function viewEdit($crud, $group, $id, $anchorName)
 {
@@ -66,7 +65,6 @@ EOT;
                 }
         }
     }
-
     echo <<<EOT
             <input type="hidden" name="edit" value="task"/>
             <input type="submit" value="Edit"/>
@@ -77,7 +75,6 @@ EOT;
 function viewAdd($crud, $group, $anchorName)
 {
     $inputs = "";
-
     foreach ($crud->taskattributes as $attribute => $type) {
         switch ($type) {
             case 'text':
@@ -93,9 +90,7 @@ function viewAdd($crud, $group, $anchorName)
                 break;
         }
     }
-
     $viewSelect = viewSelect($crud->taskattributes['status']);
-
     echo <<<EOT
     <h3>New task</h3>
     <form action="index.php#$anchorName" method="POST">
@@ -122,22 +117,15 @@ EOT;
 
 function viewEditGroup($crud, $anchorName)
 {
-
-
     $group = $_SESSION['group'];
-
-
-
-echo <<<EOT
-<h3>Rename a group</h3>
-<form action="index.php#$anchorName" method="POST">
-    <input type="text" name="newgroup" value="$group"/>
-    <input type="hidden" name="edit" value="group"/>
-    <input type="submit" value="Rename"/>
-</form>
+    echo <<<EOT
+    <h3>Rename a group</h3>
+    <form action="index.php#$anchorName" method="POST">
+        <input type="text" name="newgroup" value="$group"/>
+        <input type="hidden" name="edit" value="group"/>
+        <input type="submit" value="Rename"/>
+    </form>
 EOT;
-
-
 }
 
 function viewSelect($list, $selected = 'todo', $attribute = 'status')

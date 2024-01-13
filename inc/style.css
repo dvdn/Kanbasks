@@ -1,6 +1,8 @@
 body {
     font-size: 0.8em;
     font-family: sans-serif;
+    width: 90%;
+    margin: auto;
 }
 
 a {
@@ -8,7 +10,7 @@ a {
     color: grey;
 }
 
-a:hover{
+a:hover {
     color: black;
 }
 
@@ -66,6 +68,7 @@ textarea {
 .item textarea[readonly] {
     border: 1px dotted lightgrey;
     background: transparent;
+    margin-bottom: 0;
 }
 
 .edit {
@@ -114,7 +117,7 @@ textarea {
     margin: 0 5px;
     border: 1px solid lightgrey;
     color: grey;
-    padding: 15px 32px;
+    padding: .6em 2em;
     text-align: center;
     text-decoration: none;
     display: inline-block;

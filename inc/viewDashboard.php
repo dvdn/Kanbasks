@@ -1,6 +1,6 @@
 <?php
 const ANCHOR_NAME = 'formarea';
-const TEXTAREA_HEIGHT = 5;
+const TEXTAREA_HEIGHT = 3;
 
 // tableHead
 function viewHead()

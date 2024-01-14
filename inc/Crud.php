@@ -45,7 +45,7 @@ class Crud
         $data = $this->data;
 
         if ($newgroup && !array_key_exists($newgroup, $data)) {
-            $data[$newgroup] = array();
+            $data[$newgroup] = $data[$_SESSION['group']];
             unset($data[$_SESSION['group']]);
             file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
             $this->refreshBoard();

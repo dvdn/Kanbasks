@@ -100,8 +100,8 @@ function viewMenu($crud)
 
     if (count($crud->data)) {
         $htmlCreateTask = '<a href="?action=add#' . $anchorName . '">+ Add a new task</a>';
-        $htmlEditGroup = '<a href="?action=editgroup#' . $anchorName . '">° Rename current group</a>';
-        $htmlDeleteGroup = '<a href="?action=deletegroup#' . $anchorName . '">- Delete current group</a>';
+        $htmlEditGroup = '<a href="?action=editgroup#' . $anchorName . '">* Rename current group</a>';
+        $htmlDeleteGroup = '<a href="?action=deletegroup#' . $anchorName . '">x Delete current group</a>';
     }
 
     echo <<<EOT

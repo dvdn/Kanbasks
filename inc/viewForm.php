@@ -86,7 +86,7 @@ function viewAdd($crud, $group, $anchorName)
                 break;
             case "textarea":
                 $inputs .=  "<label for=\"$attribute\">$attribute</label>";
-                $inputs .=  "<textarea name=\"$attribute\"/> </textarea>";
+                $inputs .=  "<textarea name=\"$attribute\"/></textarea>";
                 break;
         }
     }

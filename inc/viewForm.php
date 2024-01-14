@@ -12,7 +12,8 @@ function viewDelete($group, $id, $anchorName)
         <input type="hidden" name="group" value="$group"/>
         Are you sure ?
         <div class="row btn-form">
-            <input type="submit" name="delete" value="task"/>
+            <input type="hidden" name="delete" value="task"/>
+            <input type="submit" value="Delete"/>
             $btn_cancel
         </div>
     </form>
@@ -29,7 +30,8 @@ function viewDeleteGroup($anchorName)
         <input type="hidden" value="$grouptodelete" name="grouptodelete"/>
         Are you sure you want to delete '$grouptodelete' group and all its tasks ?
         <div class="row btn-form">
-            <input type="submit" name="delete" value="group"/>
+            <input type="hidden" name="delete" value="group"/>
+            <input type="submit" value="Delete"/>
             $btn_cancel
         </div>
     </form>

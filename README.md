@@ -12,3 +12,20 @@ It's a flat file database interaction as a json file is directly modified by you
 
 Rename ['config.php.dist'](https://github.com/dvdn/kanbasks/blob/master/inc/config.php.dist) to 'config.php' and adapt it according to your needs.
 
+## Local usage
+
+To run it locally if you don't have PHP installed, you can use [Docker](https://docs.docker.com/) to start an Apache/PHP server in few seconds.
+
+I recommand using a recent PHP image version. For very specific reason this projet uses an older version.
+
+Download this project, move it in a directory where you put some php projects, for example `/home/zaphod/myprojects/php` (adapt path for your configuration). Then run :
+
+    docker run -d --rm --name php-local -p 8082:80 -v /home/zaphod/myprojects/php:/var/www/html php:5.6-apache
+
+This project will be accessible at : [http://localhost:8082/Kanbasks/](http://localhost:8082/Kanbasks/)
+
+---
+
+Note : if you encounter denied permission problem, as docker php container runs with `www-data` apache user, you should give him rights to `data/data.json` file. For example :
+
+    sudo chown www-data:www-data data/data.json

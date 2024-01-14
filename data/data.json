@@ -1,1 +1,77 @@
-{"tasks":{"1":{"title":"task 1","description":"You need to do this","created_at":"2018-11","status":"wip","color":"lightblue"},"2":{"title":"task 2","description":"You need to do that","created_at":"2018-11","status":"todo"},"3":{"title":"task 3","description":"And that","created_at":"2018-11","status":"todo","color":"orange"},"5":{"title":"task 5","description":"Take this","created_at":"2018-11","status":"done","color":"lightgreen"},"4":{"title":"task 4","description":"You need these","created_at":"2018-11","color":"","status":"wip"}}}
+{
+    "Car": [
+        {
+            "name": "Oil",
+            "description": "Oil-filter change\r\n\r\nVerify level",
+            "creation_info": "2020-01-20",
+            "color": "lightskyblue",
+            "status": "todo"
+        },
+        {
+            "name": "Brakes",
+            "description": " Change front disks",
+            "creation_info": "2020-02-12",
+            "status": "todo"
+        },
+        {
+            "name": "Engine",
+            "description": " ECU map update",
+            "creation_info": "2020-02-20",
+            "color": "coral",
+            "status": "wip"
+        }
+    ],
+    "Home": [
+        {
+            "name": "Bathroom",
+            "description": " Repair sink leak",
+            "creation_info": "2019-07",
+            "color": "aqua",
+            "status": "wip"
+        },
+        {
+            "name": "Bathroom",
+            "description": "Swap shower head",
+            "creation_info": "2019-07",
+            "color": "aqua",
+            "status": "todo"
+        },
+        {
+            "name": "Garden",
+            "description": "Mowing the lawn",
+            "creation_info": "2019-08",
+            "status": "todo"
+        }
+    ],
+    "My Web Project": [
+        {
+            "name": "Proto",
+            "description": "Wireframes",
+            "color": "lightblue",
+            "status": "wip"
+        },
+        {
+            "name": "Database",
+            "description": "Define data model and DB structure",
+            "status": "done"
+        },
+        {
+            "name": "Front",
+            "description": "Templating views FrontOffice",
+            "color": "lightblue",
+            "status": "wip"
+        },
+        {
+            "name": "Framework",
+            "description": "Choose language and framework",
+            "color": "lightgreen",
+            "status": "todo"
+        },
+        {
+            "name": "Back",
+            "description": "Form views BackOffice",
+            "status": "wip"
+        }
+    ],
+    "Misc": []
+}

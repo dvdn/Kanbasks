@@ -3,83 +3,134 @@
 class Crud
 {
     private $filePath;
-    private $fileContent;
-    public $data;
-    public $listName;
-    public $attributesList;
-    public $attributesListText;
-    public $statusList;
 
-    public function __construct($filePath = 'data/data.json')
+    public function __construct($filePath)
     {
         if (file_exists($filePath)) {
             $this->filePath = $filePath;
-            $this->fileContent = file_get_contents($filePath);
-            $this->data = json_decode($this->fileContent, true);
-            $this->listName = "tasks";
-            $this->attributesList = ["title", "description", "created_at", "color", "status"];
-            $this->attributesListText = ["title", "description", "created_at"];
-            $this->statusList = ["todo", "wip", "done"];
+            $this->data = json_decode(file_get_contents($filePath), true);
+            $this->taskattributes = [
+                'name' => 'text',
+                'description' => 'textarea',
+                'creation_info' => 'text',
+                'due_info' => 'text',
+                'color' => 'text',
+                'status' => ['todo', 'wip', 'done'],
+              ];
         } else {
-            throw new Exception("No file found", 1);
+            throw new Exception("Data file not found", 1);
         }
     }
 
-    public function actionAdd()
+    public function get_datagroup($group)
     {
-        $listName = $this->listName;
+        return $this->data[$group];
+    }
+
+    public function actionAddGroup()
+    {
+        $newgroup = isset($_POST['newgroup']) ? $_POST['newgroup'] : "";
+        $data = isset($this->data) ? $this->data : [];
+
+        if ($newgroup && !array_key_exists($newgroup, $data)) {
+            $data[$newgroup] = array();
+            file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
+            $_SESSION['group'] = $newgroup; // display group at reload
+            $this->refreshBoard();
+        }
+    }
+
+    public function actionEditGroup()
+    {
+        $newgroup = isset($_POST['newgroup']) ? $_POST['newgroup'] : "";
         $data = $this->data;
-        array_push($data[$listName], $_POST);
-        file_put_contents($this->filePath, json_encode($data));
+
+        if ($newgroup && !array_key_exists($newgroup, $data)) {
+            $data[$newgroup] = $data[$_SESSION['group']];
+            unset($data[$_SESSION['group']]);
+            file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
+            $_SESSION['group'] = $newgroup; // display group at reload
+            $this->refreshBoard();
+        }
+    }
+
+    public function actionAdd($group)
+    {
+        $data = $this->data;
+
+        foreach (array_keys($this->taskattributes) as $idx => $value) {
+            if (isset($_POST[$value]) && $_POST[$value]) { // persist only non empty values
+                $posted[$value] = $_POST[$value];
+            }
+        }
+
+        array_push($data[$group], $posted);
+
+        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
         $this->refreshBoard();
     }
 
-    public function actionRead()
-    {
-        return $this->data;
-    }
-
-    public function actionEdit()
+    public function actionEdit($group)
     {
         if (isset($_POST["id"])) {
             $id = $_POST["id"];
-            $listName = $this->listName;
             $data = $this->data;
-            $itemData = $data[$listName][$id];
+            $itemData = $data[$group][$id];
 
-            foreach ($this->attributesList as $value) {
-                $post[$value] = isset($_POST[$value]) ? $_POST[$value] : "";
+            foreach (array_keys($this->taskattributes) as $idx => $value) {
+                if (isset($_POST[$value]) && $_POST[$value]) { // persist only non empty values
+                    $posted[$value] = $_POST[$value];
+                }
             }
 
             if ($itemData) {
-                unset($data[$listName][$id]);
-                $data[$listName][$id] = $post;
-                file_put_contents($this->filePath, json_encode($data));
+                unset($data[$group][$id]);
+                $data[$group][$id] = $posted;
+                file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
             }
+
+            $this->refreshBoard($id);
+        }
+    }
+
+    public function actionDelete($group)
+    {
+        if (isset($_POST["id"])) {
+            $id = $_POST["id"];
+            unset($this->data[$group][$id]);
+            file_put_contents($this->filePath, json_encode($this->data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
+        } else {
+            echo "Nothing to delete";
             $this->refreshBoard();
         }
     }
 
-    public function actionDelete($id=null)
+    public function actionDeleteGroup()
     {
-        if ($id!==null && is_numeric($id) && $this->data[$this->listName][$id]) {
-            $listName = $this->listName;
-            $data = $this->data;
-            unset($data[$listName][$id]);
-            file_put_contents($this->filePath, json_encode($data));
+        $deletegroup = isset($_POST['grouptodelete']) ? $_POST['grouptodelete'] : "";
+        if ($deletegroup) {
+            unset($this->data[$deletegroup]);
+            file_put_contents($this->filePath, json_encode($this->data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
             $this->refreshBoard();
         } else {
-            throw new Exception("Nothing to delete", 1);
+            echo "Nothing to delete.";
+            $this->refreshBoard();
         }
     }
 
-    public function refreshBoard()
-    {        
+    public function refreshBoard($anchor = '')
+    {
         if (headers_sent()) {
-            echo('Roger that.<br>Please -> <a href="index.php">refresh the board</a>');
-        }
-        else {
-            header("Location: ".$_SERVER['PHP_SELF']);
+            $fullAnchor = $anchor ?  '#' . $anchor : '';
+            echo <<<EOT
+             <form id="refresh" action="$fullAnchor">
+                <p><img width="10%" src="inc/checkmark.png" alt="logo OK" /></p>
+                Please ->
+                <button type="submit">refresh the board</button>
+             </form>
+EOT;
+        } else {
+            header("Location: " . $_SERVER['PHP_SELF']);
         }
     }
 }

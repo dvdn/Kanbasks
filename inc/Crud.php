@@ -12,8 +12,8 @@ class Crud
             $this->taskattributes = [
                 'name' => 'text',
                 'description' => 'textarea',
-                'creation_date' => 'text',
-                'due_date' => 'text',
+                'creation_info' => 'text',
+                'due_info' => 'text',
                 'color' => 'text',
                 'status' => ['todo', 'wip', 'done'],
               ];
@@ -35,6 +35,7 @@ class Crud
         if ($newgroup && !array_key_exists($newgroup, $data)) {
             $data[$newgroup] = array();
             file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
+            $_SESSION['group'] = $newgroup; // display group at reload
             $this->refreshBoard();
         }
     }
@@ -48,7 +49,7 @@ class Crud
             $data[$newgroup] = $data[$_SESSION['group']];
             unset($data[$_SESSION['group']]);
             file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
-            $_SESSION['group'] = $newgroup; // back to edited group at reload
+            $_SESSION['group'] = $newgroup; // display group at reload
             $this->refreshBoard();
         }
     }

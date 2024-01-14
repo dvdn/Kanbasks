@@ -1,14 +1,20 @@
 <?php
 
+const BTN_CANCEL = '<span class="cancel"><a href="index.php#' . ANCHOR_NAME . '">Cancel</a></span>';
+
 function viewDelete($group, $id, $anchorName)
 {
+    $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>Delete a task</h3>
     <form action="index.php#$anchorName" method="POST">
         <input type="hidden" value="$id" name="id"/>
         <input type="hidden" name="group" value="$group"/>
         Are you sure ?
-        <input type="submit" name="delete" value="task"/>
+        <div class="row btn-form">
+            <input type="submit" name="delete" value="task"/>
+            $btn_cancel
+        </div>
     </form>
 EOT;
 }
@@ -16,12 +22,16 @@ EOT;
 function viewDeleteGroup($anchorName)
 {
     $grouptodelete = isset($_SESSION['group']) ? $_SESSION['group'] : '';
+    $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>Delete a group</h3>
     <form action="index.php#$anchorName" method="POST">
         <input type="hidden" value="$grouptodelete" name="grouptodelete"/>
         Are you sure you want to delete '$grouptodelete' group and all its tasks ?
-        <input type="submit" name="delete" value="group"/>
+        <div class="row btn-form">
+            <input type="submit" name="delete" value="group"/>
+            $btn_cancel
+        </div>
     </form>
 EOT;
 }
@@ -65,9 +75,13 @@ EOT;
                 }
         }
     }
+    $btn_cancel = BTN_CANCEL;
     echo <<<EOT
             <input type="hidden" name="edit" value="task"/>
-            <input type="submit" value="Edit"/>
+            <div class="row btn-form">
+                <input type="submit" value="Edit"/>
+                $btn_cancel
+            </div>
         </form>
 EOT;
 }
@@ -91,6 +105,7 @@ function viewAdd($crud, $group, $anchorName)
         }
     }
     $viewSelect = viewSelect($crud->taskattributes['status']);
+    $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>New task</h3>
     <form action="index.php#$anchorName" method="POST">
@@ -98,19 +113,26 @@ function viewAdd($crud, $group, $anchorName)
         $inputs
         $viewSelect
         <input type="hidden" name="add" value="task"/>
-        <input type="submit" value="Add"/>
+        <div class="row btn-form">
+            <input type="submit" value="Add"/>
+            $btn_cancel
+        </div>
     </form>
 EOT;
 }
 
 function viewAddGroup($anchorName)
 {
+    $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>New group</h3>
     <form action="index.php#$anchorName" method="POST">
         <input type="text" name="newgroup" value=""/>
         <input type="hidden" name="add" value="group"/>
-        <input type="submit" value="Add"/>
+        <div class="row btn-form">
+            <input type="submit" value="Add"/>
+            $btn_cancel
+        </div>
     </form>
 EOT;
 }
@@ -118,12 +140,16 @@ EOT;
 function viewEditGroup($crud, $anchorName)
 {
     $group = $_SESSION['group'];
+    $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>Rename a group</h3>
     <form action="index.php#$anchorName" method="POST">
         <input type="text" name="newgroup" value="$group"/>
         <input type="hidden" name="edit" value="group"/>
-        <input type="submit" value="Rename"/>
+        <div class="row btn-form">
+            <input type="submit" value="Rename"/>
+            $btn_cancel
+        </div>
     </form>
 EOT;
 }

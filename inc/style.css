@@ -34,6 +34,10 @@ a:hover {
     padding-top: 2%;
 }
 
+.row.btn-form{
+    padding: 0;
+}
+
 .head {
     width: 33%;
     float: left;
@@ -54,7 +58,7 @@ a:hover {
     font-weight: bold;
 }
 
-.item .due_date {
+.item .due_info {
     float: right;
 }
 
@@ -158,7 +162,15 @@ input[type=submit] {
 
 }
 
-form#refresh {
+.cancel {
+    display: block;
+    width: 60px;
+    margin-top: 26px;
+    line-height: 2em;
+}
+
+form#refresh,
+.cancel {
     text-align: center;
 }
 

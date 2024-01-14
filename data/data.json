@@ -3,20 +3,20 @@
         {
             "name": "Oil",
             "description": "Oil-filter change\r\n\r\nVerify level",
-            "creation_date": "2020-01-20",
+            "creation_info": "2020-01-20",
             "color": "lightskyblue",
             "status": "todo"
         },
         {
             "name": "Brakes",
             "description": " Change front disks",
-            "creation_date": "2020-02-12",
+            "creation_info": "2020-02-12",
             "status": "todo"
         },
         {
             "name": "Engine",
             "description": " ECU map update",
-            "creation_date": "2020-02-20",
+            "creation_info": "2020-02-20",
             "color": "coral",
             "status": "wip"
         }
@@ -25,21 +25,21 @@
         {
             "name": "Bathroom",
             "description": " Repair sink leak",
-            "creation_date": "2019-07",
+            "creation_info": "2019-07",
             "color": "aqua",
             "status": "wip"
         },
         {
             "name": "Bathroom",
             "description": "Swap shower head",
-            "creation_date": "2019-07",
+            "creation_info": "2019-07",
             "color": "aqua",
             "status": "todo"
         },
         {
             "name": "Garden",
             "description": "Mowing the lawn",
-            "creation_date": "2019-08",
+            "creation_info": "2019-08",
             "status": "todo"
         }
     ],

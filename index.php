@@ -1,5 +1,5 @@
 <?php session_start();
-$config = include('inc/config.php');
+$config = require('inc/config.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,19 +13,11 @@ $config = include('inc/config.php');
 <body>
 
   <?php
-  include('inc/viewDashboard.php');
-  include('inc/Crud.php');
+  require('inc/utils.php');
+  require('inc/viewDashboard.php');
+  require('inc/Crud.php');
+
   $crud = new Crud($config['data_filepath']);
-
-  function setGroupInSession($crud)
-  {
-    if (isset($_POST['group'])) {
-      $_SESSION['group'] = $_POST['group'];
-    }
-    $firstGroupName = count($crud->data) ? array_keys($crud->data)[0] : '';
-    $_SESSION['group'] = (isset($_SESSION['group']) && count($crud->data) && array_key_exists($_SESSION['group'], $crud->data)) ? $_SESSION['group'] : $firstGroupName; // first group by default
-  }
-
   setGroupInSession($crud);
 
   // Display page content

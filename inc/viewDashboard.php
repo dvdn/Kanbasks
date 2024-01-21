@@ -31,7 +31,6 @@ function viewTasks($group)
 {
     $tasks = $group->tasks;
     if ($tasks) {
-        //ksort($tasks);
         foreach ($tasks as $idx => $item) {
             viewTask($idx, $item, $group->taskattributes);
         }

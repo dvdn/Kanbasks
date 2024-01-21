@@ -7,6 +7,8 @@ $config = require('inc/config.php');
 <head>
   <meta charset="utf-8">
   <title><?php echo $config['title']; ?></title>
+ <!--  <link rel="icon" href="inc/postit.gif" type="image/gif" > -->
+  <link rel="icon" href="favicon.png" type="image/png" >
   <link rel="stylesheet" href="inc/style.css">
 </head>
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Group
+ * Group and its tasks
  */
 class Group
 {
@@ -20,13 +20,14 @@ class Group
             'due_info' => 'text',
             'color' => 'text',
             'status' => ['todo', 'wip', 'done'],
-          ];
+        ];
     }
 
     function set_name($name)
     {
         $this->name = $name;
     }
+
     function get_name()
     {
         return $this->name;
@@ -37,8 +38,27 @@ class Group
         return $this->tasks;
     }
 
-    /*     function set_tasks()
+    function set_task($id, $data)
     {
-        return $this->tasks;
-    } */
+        $this->tasks[$id] = $data;
+    }
+
+    function remove_task($id)
+    {
+        unset($this->tasks[$id]);
+    }
+
+    /**
+     * reset_tasks
+     *
+     * removes keys as : ["0":{"name":"A"},"1":{"name":"B"}]
+     * is equivalent to : [{"name":"A"},{"name":"B"}]
+     * (less chars, only uselful data)
+     *
+     * @return array tasks values
+     */
+    function reset_tasks()
+    {
+        return array_values($this->tasks);
+    }
 }

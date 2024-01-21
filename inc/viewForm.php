@@ -2,6 +2,110 @@
 
 const BTN_CANCEL = '<span class="cancel"><a href="index.php#formarea">Cancel</a></span>';
 
+function viewAddTask($group)
+{
+    $inputs = "";
+
+    foreach ($group->taskattributes as $attribute => $type) {
+        switch ($type) {
+            case 'text':
+                $inputs .=  "<label for=\"$attribute\">$attribute</label>";
+                if ($attribute == 'color') {
+                    $inputs .= '<a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords" target="_blank"> (hint)</a>';
+                }
+                $inputs .=  "<input type=\"text\" name=\"$attribute\"/>";
+                break;
+            case "textarea":
+                $inputs .=  "<label for=\"$attribute\">$attribute</label>";
+                $inputs .=  "<textarea name=\"$attribute\"/></textarea>";
+                break;
+        }
+    }
+    $viewSelect = viewSelect($group->taskattributes['status']);
+    $btn_cancel = BTN_CANCEL;
+    echo <<<EOT
+    <h3>New task</h3>
+    <form action="index.php#formarea" method="POST">
+        <input type="hidden" name="group" value="$group->name"/>
+        $inputs
+        $viewSelect
+        <input type="hidden" name="action" value="addtask"/>
+        <div class="row btn-form">
+            <input type="submit" value="Add"/>
+            $btn_cancel
+        </div>
+    </form>
+EOT;
+}
+
+function viewDeleteTask($group, $id)
+{
+    $btn_cancel = BTN_CANCEL;
+    echo <<<EOT
+    <h3>Delete a task</h3>
+    <form action="index.php#formarea" method="POST">
+        <input type="hidden" value="$id" name="id"/>
+        <input type="hidden" name="group" value="$group->name"/>
+        Are you sure ?
+        <div class="row btn-form">
+            <input type="hidden" name="action" value="deletetask"/>
+            <input type="submit" value="Delete"/>
+            $btn_cancel
+        </div>
+    </form>
+EOT;
+}
+
+function viewEditTask($group, $id)
+{
+    $task = $group->tasks[$id];
+    echo <<<EOT
+    <h3>Edition</h3>
+      <form action="index.php#formarea" method="POST">
+            <input type="hidden" value="$id" name="id"/>
+            <input type="hidden" name="group" value="$group->name"/>
+EOT;
+    foreach ($group->taskattributes as $attribute => $type) {
+        switch ($type) {
+            case 'text':
+                $value = "";
+                if (isset($task[$attribute])) {
+                    $value = $task[$attribute];
+                }
+                echo "<label for=\"$attribute\">$attribute</label>";
+
+                if ($attribute == 'color') {
+                    echo '<a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords" target="_blank"> (hint)</a>';
+                }
+
+                echo "<input type=\"text\" value=\"$value\" name=\"$attribute\"/>";
+                break;
+            case "textarea":
+                $value = "";
+                $textarea_height = TEXTAREA_HEIGHT;
+                if (isset($task[$attribute])) {
+                    $value = $task[$attribute];
+                }
+                echo "<label for=\"$attribute\">$attribute</label>";
+                echo "<textarea rows=\"$textarea_height\" value=\"$value\" name=\"$attribute\"/>$value</textarea>";
+                break;
+            default:
+                if ($attribute == 'status') {
+                    echo viewSelect($group->taskattributes[$attribute], $task[$attribute]);
+                }
+        }
+    }
+    $btn_cancel = BTN_CANCEL;
+    echo <<<EOT
+            <input type="hidden" name="action" value="edittask"/>
+            <div class="row btn-form">
+                <input type="submit" value="Edit"/>
+                $btn_cancel
+            </div>
+        </form>
+EOT;
+}
+
 function viewAddGroup()
 {
     $btn_cancel = BTN_CANCEL;
@@ -18,15 +122,14 @@ function viewAddGroup()
 EOT;
 }
 
-function viewDeleteGroup()
+function viewDeleteGroup($group)
 {
-    $grouptodelete = isset($_SESSION['group']) ? $_SESSION['group'] : '';
     $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>Delete a group</h3>
     <form action="index.php#formarea" method="POST">
-        <input type="hidden" name="group" value="$grouptodelete" />
-        Are you sure you want to delete '$grouptodelete' group and all its tasks ?
+        <input type="hidden" name="group" value="$group->name" />
+        Are you sure you want to delete '$group->name' group and all its tasks ?
         <div class="row btn-form">
             <input type="hidden" name="action" value="deletegroup"/>
             <input type="submit" value="Delete"/>
@@ -36,20 +139,37 @@ function viewDeleteGroup()
 EOT;
 }
 
-function viewEditGroup()
+function viewEditGroup($group)
 {
-    $group = $_SESSION['group'];
     $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>Rename a group</h3>
     <form action="index.php#formarea" method="POST">
-        <input type="text" name="group" value="$group"/>
-        <input type="hidden" name="oldgroup" value="$group"/>
+        <input type="text" name="group" value="$group->name"/>
+        <input type="hidden" name="oldgroup" value="$group->name"/>
         <input type="hidden" name="action" value="editgroup"/>
         <div class="row btn-form">
             <input type="submit" value="Rename"/>
             $btn_cancel
         </div>
     </form>
+EOT;
+}
+
+function viewSelect($list, $selected = 'todo', $attribute = 'status')
+{
+    $select = "";
+    foreach ($list as $item) {
+        $select .= '<option value="' . $item . '"';
+        if ($item == $selected) {
+            $select .= 'selected = "selected"';
+        }
+        $select .= '>' . $item . '</option>';
+    }
+    return <<<EOT
+            <label for="$attribute">$attribute</label>
+            <select name="$attribute">
+                $select
+            </select>
 EOT;
 }

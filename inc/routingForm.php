@@ -1,39 +1,52 @@
 <?php
 require('viewForm.php');
 
-
 // actions related to GET/POST vars available
 if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
-        case "add":
-            viewAddTask($crud, $group);
+        case "addtask":
+            viewAddTask($displayedGroup);
             break;
-        case "edit":
-            if (isset($_GET["id"])) {
-                viewEdit($crud, $group, $_GET["id"]);
+        case "edittask":
+            if ($displayedGroup && isset($_GET["id"])) {
+                viewEditTask($displayedGroup, $_GET["id"]);
             }
             break;
-        case "delete":
-            if (isset($_GET["id"])) {
-                viewDelete($group, $_GET["id"]);
+        case "deletetask":
+            if ($displayedGroup && isset($_GET["id"])) {
+                viewDeleteTask($displayedGroup, $_GET["id"]);
             }
             break;
         case "addgroup":
             viewAddGroup();
             break;
         case "editgroup":
-            if (isset($_SESSION["group"])) {
-                viewEditGroup($crud);
+            if ($displayedGroup) {
+                viewEditGroup($displayedGroup);
             }
             break;
         case "deletegroup":
-            viewDeleteGroup();
+            if ($displayedGroup) {
+                viewDeleteGroup($displayedGroup);
+            }
             break;
     }
 }
 
 if (isset($_POST["action"])) {
     switch ($_POST["action"]) {
+        case "addtask":
+            unset($_POST["addtask"]);
+            $crud->actionAddTask($displayedGroup);
+            break;
+        case "deletetask":
+            unset($_POST["deletetask"]);
+            $crud->actionDeleteTask($displayedGroup);
+            break;
+        case "edittask":
+            unset($_POST["edittask"]);
+            $crud->actionEditTask($displayedGroup);
+            break;
         case "addgroup":
             unset($_POST["addgroup"]);
             $crud->actionAddGroup();

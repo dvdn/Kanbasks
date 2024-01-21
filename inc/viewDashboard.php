@@ -1,7 +1,6 @@
 <?php
 const TEXTAREA_HEIGHT = 3;
 
-// tableHead
 function viewHead()
 {
     echo <<<EOT
@@ -10,7 +9,6 @@ function viewHead()
     </div>
 EOT;
 }
-
 
 function viewGroups($data)
 {
@@ -29,7 +27,6 @@ function viewGroups($data)
 EOT;
 }
 
-
 function viewTasks($group)
 {
     $tasks = $group->tasks;
@@ -43,7 +40,6 @@ function viewTasks($group)
     }
 }
 
-
 function viewTask($idx, $item, $taskattributes)
 {
     $status = $item['status'];
@@ -56,7 +52,7 @@ function viewTask($idx, $item, $taskattributes)
         if (array_key_exists($attribute, $item)) {
             switch ($type) {
                 case 'text':
-                    if ($attribute!="color") {
+                    if ($attribute != "color") {
                         echo "<span class=\"$attribute\" title=\"$attribute\">$item[$attribute]</span>";
                     }
 
@@ -70,14 +66,13 @@ function viewTask($idx, $item, $taskattributes)
 
     echo <<<EOT
     <div class='row'>
-            <a href="?action=delete&id=$idx#formarea" class="delete action">Delete</a>
-            <a href="?action=edit&id=$idx#formarea" class="edit action">Edit</a>
+            <a href="?action=deletetask&id=$idx#formarea" class="delete action">Delete</a>
+            <a href="?action=edittask&id=$idx#formarea" class="edit action">Edit</a>
             </div>
             </div>
         </div>
 EOT;
 }
-
 
 function viewMenu($data)
 {
@@ -86,7 +81,7 @@ function viewMenu($data)
     $htmlDeleteGroup = "";
 
     if (count($data)) {
-        $htmlCreateTask = '<a href="?action=add#formarea">+ Add a new task</a>';
+        $htmlCreateTask = '<a href="?action=addtask#formarea">+ Add a new task</a>';
         $htmlEditGroup = '<a href="?action=editgroup#formarea">* Rename current group</a>';
         $htmlDeleteGroup = '<a href="?action=deletegroup#formarea">x Delete current group</a>';
     }

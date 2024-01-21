@@ -1,16 +1,18 @@
 <?php
 
-/**
+
+ /**
  * setGroupInSession
+ * existing POST value or first of the file
  *
- * @param  Crud $crud
+ * @param  array $data
  * @return void
  */
-function setGroupInSession($crud)
+function setGroupInSession($data)
 {
   if (isset($_POST['group'])) {
     $_SESSION['group'] = $_POST['group'];
   }
-  $firstGroupName = count($crud->data) ? array_keys($crud->data)[0] : '';
-  $_SESSION['group'] = (isset($_SESSION['group']) && count($crud->data) && array_key_exists($_SESSION['group'], $crud->data)) ? $_SESSION['group'] : $firstGroupName; // first group by default
+  $firstGroupName = count($data) ? array_keys($data)[0] : '';
+  $_SESSION['group'] = (isset($_SESSION['group']) && count($data) && array_key_exists($_SESSION['group'], $data)) ? $_SESSION['group'] : $firstGroupName;
 }

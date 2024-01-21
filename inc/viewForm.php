@@ -1,97 +1,12 @@
 <?php
 
-const BTN_CANCEL = '<span class="cancel"><a href="index.php#' . ANCHOR_NAME . '">Cancel</a></span>';
+const BTN_CANCEL = '<span class="cancel"><a href="index.php#formarea">Cancel</a></span>';
 
-function viewDelete($group, $id, $anchorName)
-{
-    $btn_cancel = BTN_CANCEL;
-    echo <<<EOT
-    <h3>Delete a task</h3>
-    <form action="index.php#$anchorName" method="POST">
-        <input type="hidden" value="$id" name="id"/>
-        <input type="hidden" name="group" value="$group"/>
-        Are you sure ?
-        <div class="row btn-form">
-            <input type="hidden" name="delete" value="task"/>
-            <input type="submit" value="Delete"/>
-            $btn_cancel
-        </div>
-    </form>
-EOT;
-}
-
-function viewDeleteGroup($anchorName)
-{
-    $grouptodelete = isset($_SESSION['group']) ? $_SESSION['group'] : '';
-    $btn_cancel = BTN_CANCEL;
-    echo <<<EOT
-    <h3>Delete a group</h3>
-    <form action="index.php#$anchorName" method="POST">
-        <input type="hidden" value="$grouptodelete" name="grouptodelete"/>
-        Are you sure you want to delete '$grouptodelete' group and all its tasks ?
-        <div class="row btn-form">
-            <input type="hidden" name="delete" value="group"/>
-            <input type="submit" value="Delete"/>
-            $btn_cancel
-        </div>
-    </form>
-EOT;
-}
-
-function viewEdit($crud, $group, $id, $anchorName)
-{
-    $data = $crud->get_datagroup($group);
-    echo <<<EOT
-    <h3>Edition</h3>
-      <form action="index.php#$anchorName" method="POST">
-            <input type="hidden" value="$id" name="id"/>
-            <input type="hidden" name="group" value="$group"/>
-EOT;
-    foreach ($crud->taskattributes as $attribute => $type) {
-        switch ($type) {
-            case 'text':
-                $value = "";
-                if (isset($data[$id][$attribute])) {
-                    $value = $data[$id][$attribute];
-                }
-                echo "<label for=\"$attribute\">$attribute</label>";
-
-                if ($attribute == 'color') {
-                    echo '<a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords" target="_blank"> (hint)</a>';
-                }
-
-                echo "<input type=\"text\" value=\"$value\" name=\"$attribute\"/>";
-                break;
-            case "textarea":
-                $value = "";
-                $textarea_height = TEXTAREA_HEIGHT;
-                if (isset($data[$id][$attribute])) {
-                    $value = $data[$id][$attribute];
-                }
-                echo "<label for=\"$attribute\">$attribute</label>";
-                echo "<textarea rows=\"$textarea_height\" value=\"$value\" name=\"$attribute\"/>$value</textarea>";
-                break;
-            default:
-                if ($attribute == 'status') {
-                    echo viewSelect($crud->taskattributes[$attribute], $data[$id][$attribute]);
-                }
-        }
-    }
-    $btn_cancel = BTN_CANCEL;
-    echo <<<EOT
-            <input type="hidden" name="edit" value="task"/>
-            <div class="row btn-form">
-                <input type="submit" value="Edit"/>
-                $btn_cancel
-            </div>
-        </form>
-EOT;
-}
-
-function viewAdd($crud, $group, $anchorName)
+function viewAddTask($group)
 {
     $inputs = "";
-    foreach ($crud->taskattributes as $attribute => $type) {
+
+    foreach ($group->taskattributes as $attribute => $type) {
         switch ($type) {
             case 'text':
                 $inputs .=  "<label for=\"$attribute\">$attribute</label>";
@@ -106,15 +21,15 @@ function viewAdd($crud, $group, $anchorName)
                 break;
         }
     }
-    $viewSelect = viewSelect($crud->taskattributes['status']);
+    $viewSelect = viewSelect($group->taskattributes['status']);
     $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>New task</h3>
-    <form action="index.php#$anchorName" method="POST">
-        <input type="hidden" name="group" value="$group"/>
+    <form action="index.php#formarea" method="POST">
+        <input type="hidden" name="group" value="$group->name"/>
         $inputs
         $viewSelect
-        <input type="hidden" name="add" value="task"/>
+        <input type="hidden" name="action" value="addtask"/>
         <div class="row btn-form">
             <input type="submit" value="Add"/>
             $btn_cancel
@@ -123,14 +38,82 @@ function viewAdd($crud, $group, $anchorName)
 EOT;
 }
 
-function viewAddGroup($anchorName)
+function viewDeleteTask($group, $id)
+{
+    $btn_cancel = BTN_CANCEL;
+    echo <<<EOT
+    <h3>Delete a task</h3>
+    <form action="index.php#formarea" method="POST">
+        <input type="hidden" value="$id" name="id"/>
+        <input type="hidden" name="group" value="$group->name"/>
+        Are you sure ?
+        <div class="row btn-form">
+            <input type="hidden" name="action" value="deletetask"/>
+            <input type="submit" value="Delete"/>
+            $btn_cancel
+        </div>
+    </form>
+EOT;
+}
+
+function viewEditTask($group, $id)
+{
+    $task = $group->tasks[$id];
+    echo <<<EOT
+    <h3>Edition</h3>
+      <form action="index.php#formarea" method="POST">
+            <input type="hidden" value="$id" name="id"/>
+            <input type="hidden" name="group" value="$group->name"/>
+EOT;
+    foreach ($group->taskattributes as $attribute => $type) {
+        switch ($type) {
+            case 'text':
+                $value = "";
+                if (isset($task[$attribute])) {
+                    $value = $task[$attribute];
+                }
+                echo "<label for=\"$attribute\">$attribute</label>";
+
+                if ($attribute == 'color') {
+                    echo '<a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords" target="_blank"> (hint)</a>';
+                }
+
+                echo "<input type=\"text\" value=\"$value\" name=\"$attribute\"/>";
+                break;
+            case "textarea":
+                $value = "";
+                $textarea_height = TEXTAREA_HEIGHT;
+                if (isset($task[$attribute])) {
+                    $value = $task[$attribute];
+                }
+                echo "<label for=\"$attribute\">$attribute</label>";
+                echo "<textarea rows=\"$textarea_height\" value=\"$value\" name=\"$attribute\"/>$value</textarea>";
+                break;
+            default:
+                if ($attribute == 'status') {
+                    echo viewSelect($group->taskattributes[$attribute], $task[$attribute]);
+                }
+        }
+    }
+    $btn_cancel = BTN_CANCEL;
+    echo <<<EOT
+            <input type="hidden" name="action" value="edittask"/>
+            <div class="row btn-form">
+                <input type="submit" value="Edit"/>
+                $btn_cancel
+            </div>
+        </form>
+EOT;
+}
+
+function viewAddGroup()
 {
     $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>New group</h3>
-    <form action="index.php#$anchorName" method="POST">
-        <input type="text" name="newgroup" value=""/>
-        <input type="hidden" name="add" value="group"/>
+    <form action="index.php#formarea" method="POST">
+        <input type="text" name="group" value=""/>
+        <input type="hidden" name="action" value="addgroup"/>
         <div class="row btn-form">
             <input type="submit" value="Add"/>
             $btn_cancel
@@ -139,15 +122,32 @@ function viewAddGroup($anchorName)
 EOT;
 }
 
-function viewEditGroup($crud, $anchorName)
+function viewDeleteGroup($group)
 {
-    $group = $_SESSION['group'];
+    $btn_cancel = BTN_CANCEL;
+    echo <<<EOT
+    <h3>Delete a group</h3>
+    <form action="index.php#formarea" method="POST">
+        <input type="hidden" name="group" value="$group->name" />
+        Are you sure you want to delete '$group->name' group and all its tasks ?
+        <div class="row btn-form">
+            <input type="hidden" name="action" value="deletegroup"/>
+            <input type="submit" value="Delete"/>
+            $btn_cancel
+        </div>
+    </form>
+EOT;
+}
+
+function viewEditGroup($group)
+{
     $btn_cancel = BTN_CANCEL;
     echo <<<EOT
     <h3>Rename a group</h3>
-    <form action="index.php#$anchorName" method="POST">
-        <input type="text" name="newgroup" value="$group"/>
-        <input type="hidden" name="edit" value="group"/>
+    <form action="index.php#formarea" method="POST">
+        <input type="text" name="group" value="$group->name"/>
+        <input type="hidden" name="oldgroup" value="$group->name"/>
+        <input type="hidden" name="action" value="editgroup"/>
         <div class="row btn-form">
             <input type="submit" value="Rename"/>
             $btn_cancel
@@ -172,32 +172,4 @@ function viewSelect($list, $selected = 'todo', $attribute = 'status')
                 $select
             </select>
 EOT;
-}
-
-// Manage action
-switch ($_GET["action"]) {
-    case "add":
-        viewAdd($crud, $group, $anchorName);
-        break;
-    case "edit":
-        if (isset($_GET["id"])) {
-            viewEdit($crud, $group, $_GET["id"], $anchorName);
-        }
-        break;
-    case "delete":
-        if (isset($_GET["id"])) {
-            viewDelete($group, $_GET["id"], $anchorName);
-        }
-        break;
-    case "addgroup":
-        viewAddGroup($group, $anchorName);
-        break;
-    case "editgroup":
-        if (isset($_SESSION["group"])) {
-            viewEditGroup($crud, $anchorName);
-        }
-        break;
-    case "deletegroup":
-        viewDeleteGroup($anchorName);
-        break;
 }

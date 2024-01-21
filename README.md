@@ -6,6 +6,8 @@ Minimalist tasks manager, [kanban](https://en.wikipedia.org/wiki/Kanban) style i
 
 It's a flat file database interaction as a json file is directly modified by your actions, for example ['data.json'](https://github.com/dvdn/kanbasks/blob/master/data/data.json)
 
+By challenge and to keep this project simple, no Javascript is used.
+
 \> See [demo](http://dvdn.online.fr/kanbasks/)
 
 ## Configuration

@@ -3,13 +3,20 @@
 require('Group.php');
 require('utils.php');
 require('viewDashboard.php');
+require('Crud.php');
 
-$data = json_decode(file_get_contents($config['data_filepath']), true);
+$crud = new Crud($config['data_filepath']);
+$data = $crud->data;
 setGroupInSession($data);
 
 $displayedGroup = new Group($_SESSION['group'], $data);
 
-viewGroups($data);
+// Display page content
+viewMenu($data);
+if (count($data)) {
+    viewGroups($data);
+}
+require('routingForm.php');
 viewHead();
 viewTasks($displayedGroup);
 

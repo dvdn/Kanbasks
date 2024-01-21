@@ -79,12 +79,13 @@ EOT;
 }
 
 
-function viewMenu($crud)
+function viewMenu($data)
 {
     $htmlCreateTask = "";
+    $htmlEditGroup = "";
     $htmlDeleteGroup = "";
 
-    if (count($crud->data)) {
+    if (count($data)) {
         $htmlCreateTask = '<a href="?action=add#formarea">+ Add a new task</a>';
         $htmlEditGroup = '<a href="?action=editgroup#formarea">* Rename current group</a>';
         $htmlDeleteGroup = '<a href="?action=deletegroup#formarea">x Delete current group</a>';
@@ -99,49 +100,4 @@ function viewMenu($crud)
 </div>
 <span id="formarea"></span>
 EOT;
-}
-
-
-function viewActions($crud, $group)
-{
-    // actions related to GET/POST vars available
-    if (isset($_POST["add"])) {
-        switch ($_POST["add"]) {
-            case 'task':
-                unset($_POST["add"]);
-                $crud->actionAdd($group);
-                break;
-            case 'group':
-                unset($_POST["add"]);
-                $crud->actionAddGroup();
-                break;
-        }
-    }
-    if (isset($_POST["edit"])) {
-        switch ($_POST["edit"]) {
-            case 'task':
-                unset($_POST["edit"]);
-                $crud->actionEdit($group);
-                break;
-            case 'group':
-                unset($_POST["edit"]);
-                $crud->actionEditGroup();
-                break;
-        }
-    }
-    if (isset($_POST["delete"])) {
-        switch ($_POST["delete"]) {
-            case 'task':
-                unset($_POST["delete"]);
-                $crud->actionDelete($group);
-                break;
-            case 'group':
-                unset($_POST["delete"]);
-                $crud->actionDeleteGroup();
-                break;
-        }
-    }
-    if (isset($_GET["action"])) {
-        include('viewForm.php'); // formarea used in this file
-    }
 }

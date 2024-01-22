@@ -156,6 +156,25 @@ function viewEditGroup($group)
 EOT;
 }
 
+function viewMoveGroup($group)
+{
+    $btn_cancel = BTN_CANCEL;
+    $selector = viewSelect(['left', 'right'], 'left', 'direction');
+    echo <<<EOT
+    <h3>Move a group</h3>
+    <form action="index.php#formarea" method="POST">
+        <input type="hidden" name="group" value="$group->name" />
+        Move '$group->name' in
+        $selector
+        <div class="row btn-form">
+            <input type="hidden" name="action" value="movegroup"/>
+            <input type="submit" value="Move"/>
+            $btn_cancel
+        </div>
+    </form>
+EOT;
+}
+
 function viewSelect($list, $selected = 'todo', $attribute = 'status')
 {
     $select = "";
@@ -167,7 +186,7 @@ function viewSelect($list, $selected = 'todo', $attribute = 'status')
         $select .= '>' . $item . '</option>';
     }
     return <<<EOT
-            <label for="$attribute">$attribute</label>
+            <label for="$attribute">$attribute :</label>
             <select name="$attribute">
                 $select
             </select>

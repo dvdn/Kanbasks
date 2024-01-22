@@ -104,6 +104,11 @@ textarea {
     border-bottom: 1px dotted grey;
 }
 
+.menu a {
+    display: inline-block;
+    margin-right: 2%;
+}
+
 .row.group {
     padding: 0;
 }

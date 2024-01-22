@@ -80,14 +80,16 @@ function viewMenu($data)
     $htmlDeleteGroup = "";
 
     if (count($data)) {
+        $htmlMoveGroup = '<a href="?action=movegroup#formarea"><> Move group</a>';
+        $htmlEditGroup = '<a href="?action=editgroup#formarea">* Rename group</a>';
+        $htmlDeleteGroup = '<a href="?action=deletegroup#formarea">x Delete group</a>';
         $htmlCreateTask = '<a href="?action=addtask#formarea">+ Add a new task</a>';
-        $htmlEditGroup = '<a href="?action=editgroup#formarea">* Rename current group</a>';
-        $htmlDeleteGroup = '<a href="?action=deletegroup#formarea">x Delete current group</a>';
     }
 
     echo <<<EOT
 <div class="menu">
     <a href="?action=addgroup#formarea">+ Add a new group</a>
+    $htmlMoveGroup
     $htmlEditGroup
     $htmlDeleteGroup
     $htmlCreateTask

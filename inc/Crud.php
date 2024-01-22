@@ -99,9 +99,14 @@ class Crud
         $data = $this->data;
 
         if ($group && !array_key_exists($group, $data)) {
-            $data[$group] = $data[$oldGroup];
-            unset($data[$oldGroup]); // TODO keep groups order
-            $this->saveData($data);
+            //keep groups order
+            $offset = 2;
+            $newArray = array_slice($data, 0, $offset, true) +
+                array($group => $data[$oldGroup]) +
+                array_slice($data, $offset, NULL, true);
+            unset($newArray[$oldGroup]);
+
+            $this->saveData($newArray);
             $_SESSION['group'] = $group; // display group at reload
             $this->refreshBoard();
         }

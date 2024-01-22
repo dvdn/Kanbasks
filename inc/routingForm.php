@@ -30,6 +30,11 @@ if (isset($_GET["action"])) {
                 viewDeleteGroup($displayedGroup);
             }
             break;
+        case "movegroup":
+            if ($displayedGroup) {
+                viewMoveGroup($displayedGroup);
+            }
+            break;
     }
 }
 
@@ -58,6 +63,10 @@ if (isset($_POST["action"])) {
         case "editgroup":
             unset($_POST["editgroup"]);
             $crud->actionEditGroup();
+            break;
+        case "movegroup":
+            unset($_POST["movegroup"]);
+            $crud->actionMoveGroup();
             break;
     }
 }

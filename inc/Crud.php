@@ -100,7 +100,7 @@ class Crud
 
         if ($group && !array_key_exists($group, $data)) {
             //keep groups order
-            $offset = 2;
+            $offset = array_search($oldGroup, array_keys($data));
             $newArray = array_slice($data, 0, $offset, true) +
                 array($group => $data[$oldGroup]) +
                 array_slice($data, $offset, NULL, true);
@@ -108,6 +108,28 @@ class Crud
 
             $this->saveData($newArray);
             $_SESSION['group'] = $group; // display group at reload
+            $this->refreshBoard();
+        }
+    }
+
+    public function actionMoveGroup()
+    {
+        $group = isset($_POST['group']) ? $_POST['group'] : "";
+        $direction = isset($_POST['direction']) ? $_POST['direction'] : "";
+        $offset = array_search($group, array_keys($this->data));
+        if ($direction === 'left') {
+            $offset -= 1;
+        } else if ($direction === 'right') {
+            $offset += 1;
+        }
+
+        if ($group && $direction && ($offset != -1 and $offset != count(array_keys($this->data)) + 1)) {
+            $data = $this->data;
+            unset($data[$group]);
+            $newArray = array_slice($data, 0, $offset, true) +
+                array($group => $this->data[$group]) +
+                array_slice($data, $offset, NULL, true);
+            $this->saveData($newArray);
             $this->refreshBoard();
         }
     }

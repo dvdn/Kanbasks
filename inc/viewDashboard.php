@@ -74,13 +74,14 @@ function viewTask($idx, $item, $taskattributes)
 EOT;
 }
 
-function viewMenu($data)
+function viewMenu($dataCount)
 {
-    $htmlCreateTask = "";
+    $htmlMoveGroup = "";
     $htmlEditGroup = "";
     $htmlDeleteGroup = "";
+    $htmlCreateTask = "";
 
-    if (count($data)) {
+    if ($dataCount) {
         $htmlMoveGroup = '<a href="?action=movegroup#formarea"><> Move board</a>';
         $htmlEditGroup = '<a href="?action=editgroup#formarea">* Rename board</a>';
         $htmlDeleteGroup = '<a href="?action=deletegroup#formarea">x Delete board</a>';

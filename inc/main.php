@@ -7,20 +7,20 @@ require('Crud.php');
 
 $crud = new Crud($config['data_filepath']);
 $data = $crud->data;
+$dataCount = count($data);
 
-setGroupInSession($data);
-$displayedGroup = new Group($_SESSION['group'], $data);
+if ($dataCount) {
+    setGroupInSession($data);
+    $displayedGroup = new Group($_SESSION['group'], $data);
+}
 
 // Display page content
-viewMenu($data);
-if (count($data)) {
+viewMenu($dataCount);
+if ($dataCount) {
     viewGroups($data);
 }
 require('routingForm.php'); // manages and calls form views
 viewHead();
-viewTasks($displayedGroup);
-
-
-
-
-
+if ($dataCount) {
+    viewTasks($displayedGroup);
+}

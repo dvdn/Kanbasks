@@ -106,11 +106,31 @@ EOT;
 EOT;
 }
 
+function viewMoveTask($group, $id)
+{
+    $btn_cancel = BTN_CANCEL;
+    $selector = viewSelect(['up', 'down'], 'up', 'direction');
+    echo <<<EOT
+    <h3>Move task</h3>
+    <form action="index.php#formarea" method="POST">
+    <input type="hidden" value="$id" name="id"/>
+    <input type="hidden" name="group" value="$group->name"/>
+        Move task in
+        $selector
+        <div class="row btn-form">
+            <input type="hidden" name="action" value="movetask"/>
+            <input type="submit" value="Move"/>
+            $btn_cancel
+        </div>
+    </form>
+EOT;
+}
+
 function viewAddGroup()
 {
     $btn_cancel = BTN_CANCEL;
     echo <<<EOT
-    <h3>New group</h3>
+    <h3>New board</h3>
     <form action="index.php#formarea" method="POST">
         <input type="text" name="group" value=""/>
         <input type="hidden" name="action" value="addgroup"/>
@@ -126,10 +146,10 @@ function viewDeleteGroup($group)
 {
     $btn_cancel = BTN_CANCEL;
     echo <<<EOT
-    <h3>Delete a group</h3>
+    <h3>Delete a board</h3>
     <form action="index.php#formarea" method="POST">
         <input type="hidden" name="group" value="$group->name" />
-        Are you sure you want to delete '$group->name' group and all its tasks ?
+        Are you sure you want to delete '$group->name' board and all its tasks ?
         <div class="row btn-form">
             <input type="hidden" name="action" value="deletegroup"/>
             <input type="submit" value="Delete"/>
@@ -143,7 +163,7 @@ function viewEditGroup($group)
 {
     $btn_cancel = BTN_CANCEL;
     echo <<<EOT
-    <h3>Rename a group</h3>
+    <h3>Rename a board</h3>
     <form action="index.php#formarea" method="POST">
         <input type="text" name="group" value="$group->name"/>
         <input type="hidden" name="oldgroup" value="$group->name"/>
@@ -161,7 +181,7 @@ function viewMoveGroup($group)
     $btn_cancel = BTN_CANCEL;
     $selector = viewSelect(['left', 'right'], 'left', 'direction');
     echo <<<EOT
-    <h3>Move a group</h3>
+    <h3>Move a board</h3>
     <form action="index.php#formarea" method="POST">
         <input type="hidden" name="group" value="$group->name" />
         Move '$group->name' in

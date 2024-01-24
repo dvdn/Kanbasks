@@ -4,6 +4,7 @@ require('viewForm.php');
 // actions related to GET/POST vars available
 if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
+
         case "addtask":
             viewAddTask($displayedGroup);
             break;
@@ -17,6 +18,12 @@ if (isset($_GET["action"])) {
                 viewDeleteTask($displayedGroup, $_GET["id"]);
             }
             break;
+        case "movetask":
+            if ($displayedGroup && isset($_GET["id"])) {
+                viewMoveTask($displayedGroup, $_GET["id"]);
+            }
+            break;
+
         case "addgroup":
             viewAddGroup();
             break;
@@ -40,6 +47,7 @@ if (isset($_GET["action"])) {
 
 if (isset($_POST["action"])) {
     switch ($_POST["action"]) {
+
         case "addtask":
             unset($_POST["addtask"]);
             $crud->actionAddTask($displayedGroup);
@@ -52,6 +60,11 @@ if (isset($_POST["action"])) {
             unset($_POST["edittask"]);
             $crud->actionEditTask($displayedGroup);
             break;
+        case "movetask":
+            unset($_POST["movetask"]);
+            $crud->actionMovetask($displayedGroup);
+            break;
+
         case "addgroup":
             unset($_POST["addgroup"]);
             $crud->actionAddGroup();

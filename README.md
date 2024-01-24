@@ -2,6 +2,8 @@
 
 Minimalist tasks manager, [kanban](https://en.wikipedia.org/wiki/Kanban) style inspired.
 
+A running instance is few files that weight only 32,0 kB.
+
 ![dvdn_kanbasks_preview](https://github.com/dvdn/Kanbasks/assets/7195916/90c7bf8f-2b0c-43af-86bc-0a56079deab6)
 
 It's a flat file database interaction as a json file is directly modified by your actions, for example ['data.json'](https://github.com/dvdn/kanbasks/blob/master/data/data.json)
@@ -12,7 +14,11 @@ By challenge and to keep this project simple, no Javascript is used.
 
 ## Configuration
 
+Clone or download it in your server.
+
 Rename ['config.php.dist'](https://github.com/dvdn/kanbasks/blob/master/inc/config.php.dist) to 'config.php' and adapt it according to your needs.
+
+Job done :)
 
 ## Local usage
 

@@ -66,6 +66,7 @@ function viewTask($idx, $item, $taskattributes)
     echo <<<EOT
     <div class='row'>
             <a href="?action=deletetask&id=$idx#formarea" class="delete action">Delete</a>
+            <a href="?action=movetask&id=$idx#formarea" class="move action">Move</a>
             <a href="?action=edittask&id=$idx#formarea" class="edit action">Edit</a>
             </div>
             </div>
@@ -73,22 +74,23 @@ function viewTask($idx, $item, $taskattributes)
 EOT;
 }
 
-function viewMenu($data)
+function viewMenu($dataCount)
 {
-    $htmlCreateTask = "";
+    $htmlMoveGroup = "";
     $htmlEditGroup = "";
     $htmlDeleteGroup = "";
+    $htmlCreateTask = "";
 
-    if (count($data)) {
-        $htmlMoveGroup = '<a href="?action=movegroup#formarea"><> Move group</a>';
-        $htmlEditGroup = '<a href="?action=editgroup#formarea">* Rename group</a>';
-        $htmlDeleteGroup = '<a href="?action=deletegroup#formarea">x Delete group</a>';
+    if ($dataCount) {
+        $htmlMoveGroup = '<a href="?action=movegroup#formarea"><> Move board</a>';
+        $htmlEditGroup = '<a href="?action=editgroup#formarea">* Rename board</a>';
+        $htmlDeleteGroup = '<a href="?action=deletegroup#formarea">x Delete board</a>';
         $htmlCreateTask = '<a href="?action=addtask#formarea">+ Add a new task</a>';
     }
 
     echo <<<EOT
 <div class="menu">
-    <a href="?action=addgroup#formarea">+ Add a new group</a>
+    <a href="?action=addgroup#formarea">+ Add a new board</a>
     $htmlMoveGroup
     $htmlEditGroup
     $htmlDeleteGroup

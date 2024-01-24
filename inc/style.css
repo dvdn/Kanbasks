@@ -28,6 +28,20 @@ a:hover {
     font-weight: bold;
 }
 
+.delete {
+    width: 20%;
+}
+
+.move {
+    width: 20%;
+    margin-left: 5%;
+}
+
+.edit {
+    width: 38%;
+    margin-left: 5%;
+}
+
 .row {
     width: 100%;
     display: inline-block;
@@ -75,14 +89,6 @@ textarea {
     margin-bottom: 0;
 }
 
-.edit {
-    width: 60%;
-    margin-left: 12%;
-}
-
-.delete {
-    width: 20%;
-}
 
 .todo {
     float: left;

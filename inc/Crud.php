@@ -67,6 +67,38 @@ class Crud
         }
     }
 
+
+    public function actionMoveTask($group)
+    {
+        $direction = isset($_POST['direction']) ? $_POST['direction'] : "";
+        if (isset($_POST["id"])) {
+            $id = (int)$_POST["id"];
+
+            if ($direction === 'up') {
+                $offset = $id - 1;
+            } else if ($direction === 'down') {
+                $offset = $id + 1;
+            }
+
+            if ($direction && ($offset != -1 and $offset != count(array_keys($this->data)) + 1)) {
+                $groupTasks = $group->tasks;
+                unset($groupTasks[$id]);
+                $newArray = array_slice($groupTasks, 0, $offset, true); // tasks before
+                array_push(
+                    $newArray,
+                    $this->data[$group->name][$id]
+                );
+                $newArray = array_merge(
+                    $newArray,
+                    array_slice($groupTasks, $offset, NULL, true) // tasks after
+                );
+                $this->data[$group->name] = $newArray;
+                $this->saveData($this->data);
+                $this->refreshBoard();
+            }
+        }
+    }
+
     public function actionAddGroup()
     {
         $group = isset($_POST['group']) ? $_POST['group'] : "";

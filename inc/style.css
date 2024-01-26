@@ -24,22 +24,38 @@ a:hover {
 
 .action:hover {
     background: white;
+}
+
+.action:hover,
+form.move button:hover {
     color: black;
     font-weight: bold;
 }
 
-.delete {
-    width: 20%;
+
+
+form.move {
+    display: inherit;
+    width: 10px;
+    margin-left: 0;
+    float: left;
 }
 
-.move {
+form.move button {
+    background: transparent;
+    border: 0;
+    color: grey;
+    cursor: pointer;
+}
+
+.delete {
     width: 20%;
-    margin-left: 5%;
+    margin-left: 10%;
 }
 
 .edit {
-    width: 38%;
-    margin-left: 5%;
+    width: 45%;
+    margin-left: 10%;
 }
 
 .row {
@@ -48,7 +64,7 @@ a:hover {
     padding-top: 2%;
 }
 
-.row.btn-form{
+.row.btn-form {
     padding: 0;
 }
 

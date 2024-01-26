@@ -35,7 +35,7 @@ form.move button:hover {
 
 
 form.move {
-    display: inherit;
+    line-height: 1em;
     width: 10px;
     margin-left: 0;
     float: left;

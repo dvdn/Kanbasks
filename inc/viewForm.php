@@ -106,26 +106,6 @@ EOT;
 EOT;
 }
 
-function viewMoveTask($group, $id)
-{
-    $btn_cancel = BTN_CANCEL;
-    $selector = viewSelect(['up', 'down'], 'up', 'direction');
-    echo <<<EOT
-    <h3>Move task</h3>
-    <form action="index.php#formarea" method="POST">
-    <input type="hidden" value="$id" name="id"/>
-    <input type="hidden" name="group" value="$group->name"/>
-        Move task in
-        $selector
-        <div class="row btn-form">
-            <input type="hidden" name="action" value="movetask"/>
-            <input type="submit" value="Move"/>
-            $btn_cancel
-        </div>
-    </form>
-EOT;
-}
-
 function viewAddGroup()
 {
     $btn_cancel = BTN_CANCEL;

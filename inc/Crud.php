@@ -174,6 +174,8 @@ class Crud
 
     private function saveData($data)
     {
-        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT)); // TMP nicer json for humans
+        file_put_contents($this->filePath, json_encode($data));
+        // for json DEBUG if you need, file content easier to read
+        // file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT));
     }
 }

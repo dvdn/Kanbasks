@@ -17,10 +17,11 @@ $config = require('inc/config.php');
   require('inc/main.php');
   ?>
 
-  <footer><?php echo gmdate("Y-m-d H:i:s"); ?> (Zulu) -
+  <footer><?php echo gmdate("Y-m-d"); ?> -
     <span>
       source code <a href="https://github.com/dvdn/Kanbasks" target="_blank">dvdn/Kanbasks</a>
     </span>
+    - version 1.0.1
   </footer>
 </body>
 

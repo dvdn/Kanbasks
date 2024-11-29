@@ -93,8 +93,13 @@ function viewMenu($dataCount)
         $htmlCreateTask = '<a href="?action=addtask#formarea">+ Add a new task</a>';
     }
 
+    $data_filepath = $GLOBALS['config']['data_filepath'];
+    $data_filename = getCurrentDataFileName();
+
     echo <<<EOT
 <div class="menu">
+    <a href="$data_filepath" download="$data_filename">&raquo; Backup data</a>
+    &emsp; &emsp;
     <a href="?action=addgroup#formarea">+ Add a new board</a>
     $htmlMoveGroup
     $htmlEditGroup
@@ -103,4 +108,10 @@ function viewMenu($dataCount)
 </div>
 <span id="formarea"></span>
 EOT;
+}
+
+function getCurrentDataFileName(){
+    $title = str_replace(' ', '', strtolower($GLOBALS['config']['title']));
+    $filename = gmdate("Ymd")."_".$title."_kanbasks_data.json";
+    return $filename;
 }

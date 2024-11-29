@@ -21,7 +21,7 @@ $config = require('inc/config.php');
     <span>
       source code <a href="https://github.com/dvdn/Kanbasks" target="_blank">dvdn/Kanbasks</a>
     </span>
-    - version 1.0.0
+    - version 1.0.1
   </footer>
 </body>
 

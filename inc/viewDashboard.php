@@ -114,5 +114,4 @@ function getCurrentDataFileName(){
     $title = str_replace(' ', '', strtolower($GLOBALS['config']['title']));
     $filename = gmdate("Ymd")."_".$title."_kanbasks_data.json";
     return $filename;
-
 }

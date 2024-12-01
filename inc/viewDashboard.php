@@ -66,8 +66,8 @@ function viewTask($idx, $item, $taskattributes)
     echo <<<EOT
             <div class='row'>
                 <form class="move" action="index.php#formarea" method="POST">
-                    <input type="hidden" name="id" value="$idx"/>
-                    <input type="hidden" name="action" value="movetask"/>
+                    <input type="hidden" name="id" value="$idx">
+                    <input type="hidden" name="action" value="movetask">
                     <button  name="direction" value="up" title="move up">&#x25B4;</button>
                     <button name="direction" value="down" title="move down">&#x25BE;</button>
                 </form>

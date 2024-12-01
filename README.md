@@ -34,6 +34,6 @@ This project will be accessible at : [http://localhost:8082/Kanbasks/](http://lo
 
 ---
 
-Note : if you encounter denied permission problem, as docker php container runs with `www-data` apache user, you should give him rights to `data/data.json` file. For example :
+Note : as this docker php container runs with `www-data` apache user, to avoid denied permissions problem you should give him rights to `data/data.json` file (or your custom one). For example :
 
-    sudo chown www-data:www-data data/data.json
+    sudo chown www-data:www-data data/*.json

@@ -66,8 +66,8 @@ function viewTask($idx, $item, $taskattributes)
     echo <<<EOT
             <div class='row'>
                 <form class="move" action="index.php#formarea" method="POST">
-                    <input type="hidden" name="id" value="$idx"/>
-                    <input type="hidden" name="action" value="movetask"/>
+                    <input type="hidden" name="id" value="$idx">
+                    <input type="hidden" name="action" value="movetask">
                     <button  name="direction" value="up" title="move up">&#x25B4;</button>
                     <button name="direction" value="down" title="move down">&#x25BE;</button>
                 </form>
@@ -104,6 +104,7 @@ function viewMenu($dataCount)
     $htmlMoveGroup
     $htmlEditGroup
     $htmlDeleteGroup
+    &emsp;
     $htmlCreateTask
 </div>
 <span id="formarea"></span>
@@ -111,7 +112,7 @@ EOT;
 }
 
 function getCurrentDataFileName(){
-    $title = str_replace(' ', '', strtolower($GLOBALS['config']['title']));
+    $title = str_replace(' ', '-', strtolower($GLOBALS['config']['title']));
     $filename = gmdate("Ymd")."_".$title."_kanbasks_data.json";
     return $filename;
 }

@@ -26,12 +26,12 @@ function viewAddTask($group)
     echo <<<EOT
     <h3>New task</h3>
     <form action="index.php#formarea" method="POST">
-        <input type="hidden" name="group" value="$group->name"/>
+        <input type="hidden" name="group" value="$group->name">
         $inputs
         $viewSelect
-        <input type="hidden" name="action" value="addtask"/>
+        <input type="hidden" name="action" value="addtask">
         <div class="row btn-form">
-            <input type="submit" value="Add"/>
+            <input type="submit" value="Add">
             $btn_cancel
         </div>
     </form>
@@ -44,12 +44,12 @@ function viewDeleteTask($group, $id)
     echo <<<EOT
     <h3>Delete a task</h3>
     <form action="index.php#formarea" method="POST">
-        <input type="hidden" value="$id" name="id"/>
+        <input type="hidden" value="$id" name="id">
         <input type="hidden" name="group" value="$group->name"/>
         Are you sure ?
         <div class="row btn-form">
-            <input type="hidden" name="action" value="deletetask"/>
-            <input type="submit" value="Delete"/>
+            <input type="hidden" name="action" value="deletetask">
+            <input type="submit" value="Delete">
             $btn_cancel
         </div>
     </form>
@@ -62,8 +62,8 @@ function viewEditTask($group, $id)
     echo <<<EOT
     <h3>Edition</h3>
       <form action="index.php#formarea" method="POST">
-            <input type="hidden" value="$id" name="id"/>
-            <input type="hidden" name="group" value="$group->name"/>
+            <input type="hidden" value="$id" name="id">
+            <input type="hidden" name="group" value="$group->name">
 EOT;
     foreach ($group->taskattributes as $attribute => $type) {
         switch ($type) {
@@ -78,7 +78,7 @@ EOT;
                     echo '<a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords" target="_blank"> (hint)</a>';
                 }
 
-                echo "<input type=\"text\" value=\"$value\" name=\"$attribute\"/>";
+                echo "<input type=\"text\" value=\"$value\" name=\"$attribute\">";
                 break;
             case "textarea":
                 $value = "";
@@ -97,9 +97,9 @@ EOT;
     }
     $btn_cancel = BTN_CANCEL;
     echo <<<EOT
-            <input type="hidden" name="action" value="edittask"/>
+            <input type="hidden" name="action" value="edittask">
             <div class="row btn-form">
-                <input type="submit" value="Edit"/>
+                <input type="submit" value="Edit">
                 $btn_cancel
             </div>
         </form>
@@ -112,10 +112,10 @@ function viewAddGroup()
     echo <<<EOT
     <h3>New board</h3>
     <form action="index.php#formarea" method="POST">
-        <input type="text" name="group" value=""/>
-        <input type="hidden" name="action" value="addgroup"/>
+        <input type="text" name="group" value="">
+        <input type="hidden" name="action" value="addgroup">
         <div class="row btn-form">
-            <input type="submit" value="Add"/>
+            <input type="submit" value="Add">
             $btn_cancel
         </div>
     </form>
@@ -128,11 +128,11 @@ function viewDeleteGroup($group)
     echo <<<EOT
     <h3>Delete a board</h3>
     <form action="index.php#formarea" method="POST">
-        <input type="hidden" name="group" value="$group->name" />
+        <input type="hidden" name="group" value="$group->name">
         Are you sure you want to delete '$group->name' board and all its tasks ?
         <div class="row btn-form">
-            <input type="hidden" name="action" value="deletegroup"/>
-            <input type="submit" value="Delete"/>
+            <input type="hidden" name="action" value="deletegroup">
+            <input type="submit" value="Delete">
             $btn_cancel
         </div>
     </form>
@@ -145,11 +145,11 @@ function viewEditGroup($group)
     echo <<<EOT
     <h3>Rename a board</h3>
     <form action="index.php#formarea" method="POST">
-        <input type="text" name="group" value="$group->name"/>
-        <input type="hidden" name="oldgroup" value="$group->name"/>
-        <input type="hidden" name="action" value="editgroup"/>
+        <input type="text" name="group" value="$group->name">
+        <input type="hidden" name="oldgroup" value="$group->name">
+        <input type="hidden" name="action" value="editgroup">
         <div class="row btn-form">
-            <input type="submit" value="Rename"/>
+            <input type="submit" value="Rename">
             $btn_cancel
         </div>
     </form>
@@ -163,12 +163,12 @@ function viewMoveGroup($group)
     echo <<<EOT
     <h3>Move a board</h3>
     <form action="index.php#formarea" method="POST">
-        <input type="hidden" name="group" value="$group->name" />
+        <input type="hidden" name="group" value="$group->name">
         Move '$group->name' in
         $selector
         <div class="row btn-form">
-            <input type="hidden" name="action" value="movegroup"/>
-            <input type="submit" value="Move"/>
+            <input type="hidden" name="action" value="movegroup">
+            <input type="submit" value="Move">
             $btn_cancel
         </div>
     </form>

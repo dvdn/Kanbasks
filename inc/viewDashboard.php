@@ -104,6 +104,7 @@ function viewMenu($dataCount)
     $htmlMoveGroup
     $htmlEditGroup
     $htmlDeleteGroup
+    &emsp;
     $htmlCreateTask
 </div>
 <span id="formarea"></span>

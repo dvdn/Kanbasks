@@ -6,7 +6,6 @@
 $config = array(
     'title' => "Kanbasks",
     'data_filepath' => 'data/data.json',
-    'textarea_height' => 3,
     'debug' => 0
 );
 

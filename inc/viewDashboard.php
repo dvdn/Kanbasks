@@ -54,9 +54,7 @@ function viewTask($idx, $item, $taskattributes)
                     }
                     break;
                 case "textarea":
-                    $textareaHeight = $GLOBALS['config']['textarea_height'];
                     $textareaContent = addLinksIfContainsHttp($item[$attribute]);
-                    // echo "<textarea rows='$textareaHeight' readonly>$textareaContent</textarea>";
                     echo "<div class='textarea_box'>$textareaContent</div>";
                     break;
             }

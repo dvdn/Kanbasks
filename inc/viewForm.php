@@ -75,9 +75,8 @@ EOT;
                 echo "<input type=\"text\" value=\"$value\" name=\"$attribute\">";
                 break;
             case "textarea":
-                $textarea_height = $GLOBALS['config']['textarea_height'];
                 echo "<label for=\"$attribute\">$attribute</label>";
-                echo "<textarea rows=\"$textarea_height\" value=\"$value\" name=\"$attribute\"/>$value</textarea>";
+                echo "<textarea rows=\"5\" value=\"$value\" name=\"$attribute\"/>$value</textarea>";
                 break;
             default:
                 if ($attribute == 'status') {

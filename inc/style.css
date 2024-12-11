@@ -109,7 +109,8 @@ textarea {
 }
 
 .item .textarea_box a {
-    line-height: 2em;
+    display: inline-block;
+    margin: .5em 0;
 }
 
 .todo {

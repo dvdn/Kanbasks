@@ -78,13 +78,9 @@ EOT;
 }
 
 function addLinksIfContainsHttp($text) {
-    // Regular expression to find URLs starting with http or https
     $pattern = '/\b(http[s]?:\/\/[^\s]+)/i';
-
-    // Replace matched URLs with a clickable link
     $replacement = '<a href="$1" target="_blank">$1</a>';
 
-    // Use preg_replace to replace URLs with anchor tags
     return preg_replace($pattern, $replacement, $text);
 }
 

@@ -1,6 +1,4 @@
 <?php
-const TEXTAREA_HEIGHT = 3;
-
 function viewHead()
 {
     echo <<<EOT
@@ -43,7 +41,7 @@ function viewTask($idx, $item, $taskattributes)
 {
     $status = $item['status'];
     $color = empty($item['color']) ? 'yellow' : $item['color'];
-    $colorStyle = "style='background-color: " . $color . ";'";
+    $colorStyle = "style='background-color: $color;'";
 
     echo "<div class='row'><div id=" . $idx . " class='item " . $status . "' " . $colorStyle . ">";
 
@@ -54,10 +52,10 @@ function viewTask($idx, $item, $taskattributes)
                     if ($attribute != "color") {
                         echo "<span class=\"$attribute\" title=\"$attribute\">$item[$attribute]</span>";
                     }
-
                     break;
                 case "textarea":
-                    echo '<textarea rows="' . TEXTAREA_HEIGHT . '" readonly>' . $item[$attribute] . '</textarea>';
+                    $textareaContent = addLinksIfContainsHttp($item[$attribute]);
+                    echo "<div class='textarea_box'>$textareaContent</div>";
                     break;
             }
         }
@@ -68,7 +66,7 @@ function viewTask($idx, $item, $taskattributes)
                 <form class="move" action="index.php#formarea" method="POST">
                     <input type="hidden" name="id" value="$idx">
                     <input type="hidden" name="action" value="movetask">
-                    <button  name="direction" value="up" title="move up">&#x25B4;</button>
+                    <button name="direction" value="up" title="move up">&#x25B4;</button>
                     <button name="direction" value="down" title="move down">&#x25BE;</button>
                 </form>
                 <a href="?action=deletetask&id=$idx#formarea" class="delete action">Delete</a>
@@ -77,6 +75,13 @@ function viewTask($idx, $item, $taskattributes)
         </div>
     </div>
 EOT;
+}
+
+function addLinksIfContainsHttp($text) {
+    $pattern = '/\b(http[s]?:\/\/[^\s]+)/i';
+    $replacement = '<a href="$1" target="_blank">$1</a>';
+
+    return preg_replace($pattern, $replacement, $text);
 }
 
 function viewMenu($dataCount)

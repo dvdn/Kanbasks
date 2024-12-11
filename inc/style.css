@@ -93,18 +93,25 @@ form.move button {
 }
 
 textarea {
-    form-sizing: normal;
     resize: vertical;
     min-height: 4em;
     max-height: 24em;
 }
 
-.item textarea[readonly] {
+.item .textarea_box {
+    padding: 2px;
     border: 1px dotted lightgrey;
     background: transparent;
     margin-bottom: 0;
+    overflow: auto;
+    white-space: pre-wrap; /* keep textarea linebreaks */
+    line-height: normal;
 }
 
+.item .textarea_box a {
+    display: inline-block;
+    margin: .5em 0;
+}
 
 .todo {
     float: left;
@@ -186,7 +193,6 @@ input[type=submit] {
     border-radius: 5px;
     margin-top: 25px;
     float: right;
-
 }
 
 .cancel {

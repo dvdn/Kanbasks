@@ -7,16 +7,15 @@ function viewAddTask($group)
     $inputs = "";
 
     foreach ($group->taskattributes as $attribute => $type) {
+        $inputs .= "<label for=\"$attribute\">$attribute</label>";
         switch ($type) {
             case 'text':
-                $inputs .=  "<label for=\"$attribute\">$attribute</label>";
                 if ($attribute == 'color') {
                     $inputs .= '<a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords" target="_blank"> (hint)</a>';
                 }
                 $inputs .=  "<input type=\"text\" name=\"$attribute\"/>";
                 break;
             case "textarea":
-                $inputs .=  "<label for=\"$attribute\">$attribute</label>";
                 $inputs .=  "<textarea name=\"$attribute\"/></textarea>";
                 break;
         }
@@ -66,33 +65,24 @@ function viewEditTask($group, $id)
             <input type="hidden" name="group" value="$group->name">
 EOT;
     foreach ($group->taskattributes as $attribute => $type) {
+        $value = isset($task[$attribute]) ? $task[$attribute] : '';
         switch ($type) {
             case 'text':
-                $value = "";
-                if (isset($task[$attribute])) {
-                    $value = $task[$attribute];
-                }
                 echo "<label for=\"$attribute\">$attribute</label>";
-
                 if ($attribute == 'color') {
                     echo '<a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords" target="_blank"> (hint)</a>';
                 }
-
                 echo "<input type=\"text\" value=\"$value\" name=\"$attribute\">";
                 break;
             case "textarea":
-                $value = "";
-                $textarea_height = TEXTAREA_HEIGHT;
-                if (isset($task[$attribute])) {
-                    $value = $task[$attribute];
-                }
                 echo "<label for=\"$attribute\">$attribute</label>";
-                echo "<textarea rows=\"$textarea_height\" value=\"$value\" name=\"$attribute\"/>$value</textarea>";
+                echo "<textarea rows=\"5\" value=\"$value\" name=\"$attribute\"/>$value</textarea>";
                 break;
             default:
                 if ($attribute == 'status') {
                     echo viewSelect($group->taskattributes[$attribute], $task[$attribute]);
                 }
+                break;
         }
     }
     $btn_cancel = BTN_CANCEL;

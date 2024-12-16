@@ -2,13 +2,13 @@
 
 Minimalist tasks manager, [kanban](https://en.wikipedia.org/wiki/Kanban) style inspired.
 
-A running instance is few files that weight only 32,0 kB.
+A running instance is few files that weight **only 32,0 kB**.
 
 ![dvdn_kanbasks_preview](https://github.com/dvdn/Kanbasks/assets/7195916/3a51960e-20ee-42c7-a002-13d5a84c7233)
 
 It's a flat file database interaction as a json file is directly modified by your actions, for example ['data.json'](https://github.com/dvdn/kanbasks/blob/master/data/data.json)
 
-By challenge and to keep this project simple, no Javascript is used.
+By challenge and to keep this project simple, [**no Javascript is used**](https://news.ycombinator.com/item?id=12690842).
 
 \> See [demo](http://dvdn.online.fr/kanbasks/)
 
@@ -24,7 +24,7 @@ Job done :)
 
 To run it locally if you don't have PHP installed, you can use [Docker](https://docs.docker.com/) to start an Apache/PHP server in few seconds.
 
-I recommand using a recent PHP image version. For very specific reason this projet uses an older version.
+For a very specific reason this project should run with an old PHP version. I recommand using a recent PHP image version.
 
 Download this project, move it in a directory where you put some php projects, for example `/home/zaphod/myprojects/php` (adapt path for your configuration). Then run :
 

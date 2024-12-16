@@ -8,7 +8,7 @@ A running instance is few files that weight **only 32,0 kB**.
 
 It's a flat file database interaction as a json file is directly modified by your actions, for example ['data.json'](https://github.com/dvdn/kanbasks/blob/master/data/data.json)
 
-By challenge and to keep this project simple, ![no Javascript is used](https://news.ycombinator.com/item?id=12690842).
+By challenge and to keep this project simple, [**no Javascript is used**](https://news.ycombinator.com/item?id=12690842).
 
 \> See [demo](http://dvdn.online.fr/kanbasks/)
 

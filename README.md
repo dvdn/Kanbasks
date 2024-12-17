@@ -4,7 +4,7 @@ Minimalist tasks manager, [kanban](https://en.wikipedia.org/wiki/Kanban) style i
 
 A running instance is few files that weight **only 32,0 kB**.
 
-![dvdn_kanbasks_preview](https://github.com/dvdn/Kanbasks/assets/7195916/3a51960e-20ee-42c7-a002-13d5a84c7233)
+![dvdn_kanbasks_preview](https://github.com/user-attachments/assets/07e088b5-78f9-43e4-b166-f5f869b9f237)
 
 It's a flat file database interaction as a json file is directly modified by your actions, for example ['data.json'](https://github.com/dvdn/kanbasks/blob/master/data/data.json)
 

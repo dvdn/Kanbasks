@@ -103,7 +103,7 @@ textarea {
     border: 1px dotted lightgrey;
     background: transparent;
     margin-bottom: 0;
-    overflow: auto;
+    overflow: hidden;
     white-space: pre-wrap; /* keep textarea linebreaks */
     line-height: normal;
 }
@@ -111,6 +111,11 @@ textarea {
 .item .textarea_box a {
     display: inline-block;
     margin: .5em 0;
+    color: dimgray;
+}
+
+.item .textarea_box a:hover {
+    color: black;
 }
 
 .todo {
@@ -128,14 +133,13 @@ textarea {
 
 .menu {
     margin: 10px 0;
-    padding: 10px 0;
     border-top: 1px dotted grey;
     border-bottom: 1px dotted grey;
 }
 
 .menu a {
     display: inline-block;
-    margin-right: 2%;
+    margin: 10px 2% 10px 0;
 }
 
 .row.group {
@@ -214,4 +218,13 @@ footer {
     width: 100%;
     text-align: right;
     color: grey;
+}
+
+@media only screen and (max-width: 961px) {
+    .menu a  {
+        margin: 5px 2% 5px 0;
+    }
+    .row.group button.group {
+        margin: 2px 5px;
+    }
 }

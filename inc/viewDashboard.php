@@ -10,7 +10,7 @@ EOT;
 
 function viewGroups($data)
 {
-    $btnsGroup = "";
+    $btnsGroup = '';
     $currentGroup = isset($_SESSION['group']) ? $_SESSION['group'] : '';
     foreach (array_keys($data) as $group) {
         $styleCurrent = $group == $currentGroup ? 'style="border-color: black; color:black; font-weight:bold;"' : '';
@@ -86,16 +86,17 @@ function addLinksIfContainsHttp($text) {
 
 function viewMenu($dataCount)
 {
-    $htmlMoveGroup = "";
-    $htmlEditGroup = "";
-    $htmlDeleteGroup = "";
-    $htmlCreateTask = "";
+    $htmlNewGroup = '<a href="?action=addgroup#formarea">+ Add a new board</a>';
+    $htmlMoveGroup = '';
+    $htmlEditGroup = '';
+    $htmlDeleteGroup = '';
+    $htmlCreateTask = '';
 
     if ($dataCount) {
+        $htmlCreateTask = '<a href="?action=addtask#formarea">+ Add a new task</a>';
         $htmlMoveGroup = '<a href="?action=movegroup#formarea"><> Move board</a>';
         $htmlEditGroup = '<a href="?action=editgroup#formarea">* Rename board</a>';
         $htmlDeleteGroup = '<a href="?action=deletegroup#formarea">x Delete board</a>';
-        $htmlCreateTask = '<a href="?action=addtask#formarea">+ Add a new task</a>';
     }
 
     $data_filepath = $GLOBALS['config']['data_filepath'];
@@ -105,12 +106,12 @@ function viewMenu($dataCount)
 <div class="menu">
     <a href="$data_filepath" download="$data_filename">&raquo; Backup data</a>
     &emsp; &emsp;
-    <a href="?action=addgroup#formarea">+ Add a new board</a>
+    <strong>$htmlCreateTask</strong>
+    &emsp; &emsp;
+    $htmlNewGroup
     $htmlMoveGroup
     $htmlEditGroup
     $htmlDeleteGroup
-    &emsp;
-    $htmlCreateTask
 </div>
 <span id="formarea"></span>
 EOT;

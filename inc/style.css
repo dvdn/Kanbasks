@@ -103,7 +103,7 @@ textarea {
     border: 1px dotted lightgrey;
     background: transparent;
     margin-bottom: 0;
-    overflow: auto;
+    overflow: hidden;
     white-space: pre-wrap; /* keep textarea linebreaks */
     line-height: normal;
 }
@@ -111,6 +111,11 @@ textarea {
 .item .textarea_box a {
     display: inline-block;
     margin: .5em 0;
+    color: dimgray;
+}
+
+.item .textarea_box a:hover {
+    color: black;
 }
 
 .todo {
